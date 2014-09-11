@@ -5261,7 +5261,8 @@ a.thumbnail:focus {
   border: 1px solid #dddddd;
 }
 
-.l   group-item:first-child {   border-top-right-radius: 4px;
+.list-group-item:first-child {
+  border-top-right-radius: 4px;
   border-top-left-radius: 4px;
 }
 

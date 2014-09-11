@@ -12,6 +12,7 @@ namespace HelloWorld
     {
         public void Configuration(IAppBuilder app)
         {
+            // Added a comment here.
             ConfigureAuth(app);
         }
     }
