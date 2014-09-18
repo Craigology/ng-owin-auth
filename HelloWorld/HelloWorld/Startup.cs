@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Owin;
+using System.Web;
 using Owin;
-
-[assembly: OwinStartup(typeof(HelloWorld.Startup))]
 
 namespace HelloWorld
 {
-    public partial class Startup
+    public class Startup
     {
         public void Configuration(IAppBuilder app)
         {
-            // Added a comment here.
-            ConfigureAuth(app);
+            // New code:
+            app.Run(async context =>
+            {
+                context.Response.ContentType = "text/plain";
+                await context.Response.WriteAsync("Hello, world.");
+            });
         }
     }
 }
