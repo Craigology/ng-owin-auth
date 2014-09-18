@@ -102,6 +102,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\HelloWorld9626 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\HelloWorld9626 - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
