@@ -6,7 +6,11 @@ using System.Web;
 
 namespace HelloWorld.Models
 {
-    public class AuthContext : IdentityDbContext<IdentityUser>
+    public class ApplicationUser : IdentityUser
+    {
+    }
+
+    public class AuthContext : IdentityDbContext<ApplicationUser>
     {
         public AuthContext()
             : base("AuthContext")
