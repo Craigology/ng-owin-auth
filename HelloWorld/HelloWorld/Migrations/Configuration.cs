@@ -5,14 +5,14 @@ namespace HelloWorld.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<HelloWorld.Models.AuthContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<HelloWorld.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(HelloWorld.Models.AuthContext context)
+        protected override void Seed(HelloWorld.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

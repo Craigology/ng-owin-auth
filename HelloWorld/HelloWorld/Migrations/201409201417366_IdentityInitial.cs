@@ -3,7 +3,7 @@ namespace HelloWorld.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialAuth : DbMigration
+    public partial class IdentityInitial : DbMigration
     {
         public override void Up()
         {

@@ -1,14 +1,9 @@
-﻿using HelloWorld.Domain;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Owin.Security.OAuth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.OAuth;
 
-namespace HelloWorld
+namespace HelloWorld.Providers
 {
     public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
@@ -21,22 +16,23 @@ namespace HelloWorld
         {
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-            using (AuthRepository _repo = new AuthRepository())
-            {
-                IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
+            var applicationUserManager = context.OwinContext.Get<ApplicationUserManager>("ApplicationUserManager");
 
-                if (user == null)
-                {
-                    context.SetError("invalid_grant", "The user name or password is incorrect.");
-                    return;
-                }
+            var user = await applicationUserManager.FindAsync(context.UserName, context.Password);
+            if (user == null)
+            {
+                context.SetError("invalid_grant", "The user name or password is incorrect.");
+                return;
             }
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            identity.AddClaim(new Claim("sub", context.UserName));
-            identity.AddClaim(new Claim("role", "user"));
+            identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
+            identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
 
-            context.Validated(identity);
+            context.OwinContext.Authentication.SignIn(identity);
+
+            var ticket = new AuthenticationTicket(identity, new AuthenticationProperties());
+            context.Validated(ticket);
 
         }
     }

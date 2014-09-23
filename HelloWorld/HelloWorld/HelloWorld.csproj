@@ -40,6 +40,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Owin">
+      <HintPath>..\packages\Autofac.Owin.3.1.0\lib\net45\Autofac.Integration.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi">
+      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi.Owin">
+      <HintPath>..\packages\Autofac.WebApi2.Owin.3.2.0\lib\net45\Autofac.Integration.WebApi.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -74,6 +86,9 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Host.IIS">
       <HintPath>..\packages\Microsoft.Owin.Host.IIS.1.0.0-alpha1\lib\net45\Microsoft.Owin.Host.IIS.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Hosting">
       <HintPath>..\packages\Microsoft.Owin.Hosting.2.1.0\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
@@ -140,21 +155,24 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\HelloMiddleware.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Domain\AuthRepository.cs" />
-    <Compile Include="Migrations\201409191320374_InitialAuth.cs" />
-    <Compile Include="Migrations\201409191320374_InitialAuth.Designer.cs">
-      <DependentUpon>201409191320374_InitialAuth.cs</DependentUpon>
+    <Compile Include="Migrations\201409201417366_IdentityInitial.cs" />
+    <Compile Include="Migrations\201409201417366_IdentityInitial.Designer.cs">
+      <DependentUpon>201409201417366_IdentityInitial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Domain\AuthContext.cs" />
-    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Compile Include="App_Start\Startup.IoC.cs" />
     <None Include="Properties\PublishProfiles\HelloWorld9626 - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\HelloWorld9626 - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
@@ -166,10 +184,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Domain\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201409191320374_InitialAuth.resx">
-      <DependentUpon>201409191320374_InitialAuth.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201409201417366_IdentityInitial.resx">
+      <DependentUpon>201409201417366_IdentityInitial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

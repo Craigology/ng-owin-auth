@@ -7,13 +7,13 @@ namespace HelloWorld.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class InitialAuth : IMigrationMetadata
+    public sealed partial class IdentityInitial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialAuth));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(IdentityInitial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201409191320374_InitialAuth"; }
+            get { return "201409201417366_IdentityInitial"; }
         }
         
         string IMigrationMetadata.Source
