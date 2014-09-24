@@ -29,11 +29,10 @@ namespace HelloWorld.Providers
             identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
             identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
 
-            context.OwinContext.Authentication.SignIn(identity);
-
             var ticket = new AuthenticationTicket(identity, new AuthenticationProperties());
             context.Validated(ticket);
 
+            context.OwinContext.Authentication.SignIn(identity);
         }
     }
 }

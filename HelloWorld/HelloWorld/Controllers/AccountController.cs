@@ -1,16 +1,9 @@
 ﻿using System.Linq;
-using System.Net;
 using System.Security.Claims;
-using System.Web.Http.Results;
 using HelloWorld.Models;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
-using Microsoft.Owin.Security;
-using Newtonsoft.Json;
 
 namespace HelloWorld.Controllers
 {
@@ -18,8 +11,6 @@ namespace HelloWorld.Controllers
     public class AccountController : ApiController
     {
         private ApplicationDbContext _ctx;
-        private ApplicationUserManager _userManager;
-        //public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
@@ -27,34 +18,8 @@ namespace HelloWorld.Controllers
             SignInManager = signInManager;
         }
 
-        //public AccountController()
-        //{
-        //    _ctx = new ApplicationDbContext();
-        //    _userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(_ctx));
-        //}
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager;
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
-        private ApplicationSignInManager _signInManager;
-
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager;
-            }
-            private set { _signInManager = value; }
-        }
+        public ApplicationUserManager UserManager { get; private set; }
+        public ApplicationSignInManager SignInManager { get; private set; }
 
         // POST api/Account/Register
         [AllowAnonymous]
@@ -72,7 +37,7 @@ namespace HelloWorld.Controllers
                 Email = userModel.Email
             };
 
-            var result = await _userManager.CreateAsync(user, userModel.Password);
+            var result = await UserManager.CreateAsync(user, userModel.Password);
         
             IHttpActionResult errorResult = GetErrorResult(result);
 
@@ -151,6 +116,4 @@ namespace HelloWorld.Controllers
             return null;
         }
     }
-
-
 }
