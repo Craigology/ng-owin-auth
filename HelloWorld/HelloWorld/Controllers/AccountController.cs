@@ -62,7 +62,7 @@ namespace HelloWorld.Controllers
         [Route("Foo")]
         public IHttpActionResult Foo()
         {
-            return Ok("Yeah!");
+            return Ok("Yeah! Yeah!");
         }
 
         //[AllowAnonymous]
