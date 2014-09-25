@@ -5,9 +5,10 @@
         // Angular modules 
         'ngAnimate',
         'ngRoute',
-        'ui.bootstrap'
-
+        'ui.bootstrap',
+        'ngResource',
         // Custom modules 
+        'common'
 
         // 3rd Party Modules
 

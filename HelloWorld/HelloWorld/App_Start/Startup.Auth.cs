@@ -25,7 +25,7 @@ namespace HelloWorld
             {
                 TokenEndpointPath = new PathString("/Token"),
                 AuthorizeEndpointPath = new PathString("/Account/Authorize"),
-                Provider = new SimpleAuthorizationServerProvider(),
+                Provider = new IssAuthorizationServerProvider(),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 AllowInsecureHttp = true
             };

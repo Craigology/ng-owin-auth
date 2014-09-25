@@ -10,8 +10,6 @@ namespace HelloWorld.Controllers
     [Route("api/Account")]
     public class AccountController : ApiController
     {
-        private ApplicationDbContext _ctx;
-
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
@@ -60,7 +58,7 @@ namespace HelloWorld.Controllers
         [Authorize]
         [HttpGet]
         [Route("Foo")]
-        public IHttpActionResult Foo()
+        public IHttpActionResult GetUser()
         {
             return Ok("Yeah! Yeah!");
         }
