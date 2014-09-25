@@ -1,9 +1,9 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('app').controller("loginController", ['$scope', '$rootScope', '$http', loginController]);
+    angular.module('app').controller("loginController", ['$scope', '$rootScope', '$http', "toast", loginController]);
 
-    function loginController($scope, $rootScope, $http) {
+    function loginController($scope, $rootScope, $http, toast) {
         var vm = this;
 
         vm.title = 'Hello World';
@@ -26,11 +26,13 @@
                     vm.userName = data.userName;
                     vm.email = data.email;
                     vm.message = "Welcome, " + data.userName;
+
+                    toast.success('Logged in.');
                 }).
                 error(function(data, status, headers, config) {
-                    $http.defaults.headers.post['Content-Type'] = currentContentType;
-                    $log()
-            });
+                });
+
+            $http.defaults.headers.post['Content-Type'] = currentContentType;
         }
     }
 })();
