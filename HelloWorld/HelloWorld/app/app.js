@@ -7,15 +7,28 @@
         'ngRoute',
         'ui.bootstrap',
         'ngResource',
+
         // Custom modules 
-        'common'
+        'common',
 
         // 3rd Party Modules
-
+        'angularSpinner',
+        'ajoslin.promise-tracker'
     ]);
 
-    app.factory('toast', function () {
+    //app.config(function ($provide) {
 
+    //    $provide.decorator("$exceptionHandler", function ($delegate, $injector) {
+    //        return function (exception, cause) {
+    //            var $rootScope = $injector.get("$rootScope");
+    //            $rootScope.addError({ message: "Exception", reason: exception });
+    //            toastr.error(cause);
+    //            $delegate(exception, cause);
+    //        };
+    //    });
+    //});
+
+    app.config(function () {
         toastr.options = {
             "closeButton": true,
             "positionClass": "toast-bottom-right",
@@ -27,6 +40,9 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         };
+    });
+
+    app.factory('toast', function () {
 
         return {
             success: function (text) {
@@ -37,5 +53,10 @@
             }
         };
     });
+
+    app.run(["$rootScope", "promiseTracker",  function ($rootScope, promiseTracker) {
+
+        $rootScope.loadingTracker = promiseTracker({ activationDelay: 0, minDuration: 250 });
+    }] );
 
 })();
