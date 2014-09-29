@@ -256,9 +256,9 @@
     <Content Include="content\fonts\font-awesome-4.2.0\scss\_spinning.scss" />
     <Content Include="content\fonts\font-awesome-4.2.0\scss\_stacked.scss" />
     <Content Include="content\fonts\font-awesome-4.2.0\scss\_variables.scss" />
-    <Content Include="Deploy.ps1">
+    <None Include="Deploy.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <None Include="scripts\jquery-2.1.1-vsdoc.js" />
     <Content Include="scripts\jquery-2.1.1.js" />
     <Content Include="scripts\jquery-2.1.1.min.js" />
