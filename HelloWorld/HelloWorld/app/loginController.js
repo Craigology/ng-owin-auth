@@ -7,7 +7,7 @@
         var vm = this;
 
         $scope.isBusy = false;
-        vm.title = 'Hello World';
+        $scope.isLoggedIn = false;
         vm.getToken = getToken;
 
         (function activate() {
@@ -27,33 +27,22 @@
 
             $scope.isBusy = true;
 
-            $scope.isBusyPromise = $http.post(url, request, {tracker: $rootScope.loadingTracker }).success(function (data, status) {
-                deferred.resolve(data);
-            }).error(function (data, status) {
-                deferred.reject(data);
+            $scope.isBusyPromise = $http.post(url, request, {tracker: $rootScope.loadingTracker }).success(function (response, status) {
+                deferred.resolve(response);
+            }).error(function (response, status) {
+                deferred.reject(response);
             });
 
-            $scope.isBusyPromise.then(function(token) {
-                toast.success('Logged in.');
+            $scope.isBusyPromise.then(function (response) {
+                $scope.isLoggedIn = true;
+                vm.token = response.data;
+                vm.username = vm.token.userName;
+                toast.success(vm.token.userName + ' logged in.');
             }, function(error) {
                 toast.error('Failed to login, reason: ' + error);
             }).finally(function() {
                 $scope.isBusy = false;
             });
-
-            //    success(function(data, status, headers, config) {
-
-            //        $rootScope.$broadcast("login", data);
-            //        $scope.token = data;
-            //        vm.userName = data.userName;
-            //        vm.email = data.email;
-            //        vm.message = "Welcome, " + data.userName;
-
-            //        toast.success('Logged in.');
-            //    });
-            //$scope.isBusy.
-            //        error(function(data, status, headers, config) {
-            //        });
 
             $http.defaults.headers.post['Content-Type'] = currentContentType;
         }
