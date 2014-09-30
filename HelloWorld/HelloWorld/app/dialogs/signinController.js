@@ -32,13 +32,14 @@
 
             $scope.isBusyPromise.then(function (response) {
 
-                $scope.isLoggedIn = true;
+                $rootScope.isLoggedIn = true;
                 $scope.$close(true);
                 vm.token = response.data;
                 vm.username = vm.token.userName;
                 toast.success(vm.token.userName + ' logged in.');
 
                 $localStorageService.set('recentUsername', vm.username);
+                $rootScope.$broadcast('loggedIn', vm.username);
 
             }, function(error) {
                 toast.error('Failed to login, reason: ' + error);

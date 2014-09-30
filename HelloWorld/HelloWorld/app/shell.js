@@ -10,6 +10,13 @@
         $scope.isLoggedIn = false;
 
         vm.signIn = signIn;
+        vm.username = "";
+
+        $scope.$on('loggedIn', function (event, username) {
+            vm.isLoggedIn = true;
+            $scope.isLoggedIn = true;
+            vm.username = username;
+        });
 
         (function activate() {
 
