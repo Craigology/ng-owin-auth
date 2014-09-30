@@ -13,7 +13,8 @@
 
         // 3rd Party Modules
         'angularSpinner',
-        'ajoslin.promise-tracker'
+        'ajoslin.promise-tracker',
+         'LocalStorageModule'
     ]);
 
     app.config(function () {

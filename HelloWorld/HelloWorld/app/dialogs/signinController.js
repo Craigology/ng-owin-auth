@@ -1,17 +1,17 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('app').controller("signinController", ['$scope', '$rootScope', '$http', "$q", "$modal", "toast", signinController]);
+    angular.module('app').controller("signinController", ['$scope', '$rootScope', '$http', "$q", "$modal", "toast", 'localStorageService', signinController]);
 
-    function signinController($scope, $rootScope, $http, $q, $modal, toast) {
+    function signinController($scope, $rootScope, $http, $q, $modal, toast, $localStorageService) {
         var vm = this;
 
         $scope.isBusy = false;
 
         vm.getToken = getToken;
-
-        (function activate() {
-        });
+        vm.cancel = cancel;
+        vm.username = $localStorageService.get('recentUsername');
+        vm.password = "";
 
         function getToken() {
 
@@ -20,7 +20,7 @@
 
             var deferred = $q.defer();
             var url = '/Token';
-            var request = jQuery.param({ username: "Fred", password: "Fishoil6$", grant_type: "password" });
+            var request = jQuery.param({ username: vm.username, password: vm.password, grant_type: "password" });
 
             $scope.isBusy = true;
 
@@ -31,10 +31,15 @@
             });
 
             $scope.isBusyPromise.then(function (response) {
+
                 $scope.isLoggedIn = true;
+                $scope.$close(true);
                 vm.token = response.data;
                 vm.username = vm.token.userName;
                 toast.success(vm.token.userName + ' logged in.');
+
+                $localStorageService.set('recentUsername', vm.username);
+
             }, function(error) {
                 toast.error('Failed to login, reason: ' + error);
             }).finally(function() {
@@ -42,6 +47,10 @@
             });
 
             $http.defaults.headers.post['Content-Type'] = currentContentType;
+        }
+
+        function cancel() {
+            $scope.$close(false);
         }
     }
 })();

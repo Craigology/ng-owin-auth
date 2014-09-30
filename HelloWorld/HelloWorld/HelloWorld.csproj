@@ -189,6 +189,7 @@
     <Content Include="app\dialogs\signin.html" />
     <Content Include="app\dialogs\signinController.js" />
     <Content Include="app\shell.js" />
+    <Content Include="content\bootstrap-social.css" />
     <Content Include="content\bootstrap\bootstrap-theme.css" />
     <Content Include="content\bootstrap\bootstrap-theme.min.css" />
     <Content Include="content\bootstrap\bootstrap.css" />
@@ -209,6 +210,8 @@
     <Content Include="Index.html" />
     <Content Include="scripts\angular-animate.js" />
     <Content Include="scripts\angular-animate.min.js" />
+    <Content Include="scripts\angular-local-storage.js" />
+    <Content Include="scripts\angular-local-storage.min.js" />
     <Content Include="scripts\angular-mocks.js" />
     <Content Include="scripts\angular-resource.js" />
     <Content Include="scripts\angular-resource.min.js" />

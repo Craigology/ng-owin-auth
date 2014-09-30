@@ -1,9 +1,51 @@
-﻿<form novalidate id="signinForm" name="form.signin" ng-submit="vm.getToken()" role="form">
+﻿<link href="../../content/bootstrap/bootstrap.min.css" rel="stylesheet" />
+<link href="../../content/fonts/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="../../content/bootstrap-social.css" rel="stylesheet" />
+<form novalidate id="signinForm" name="form.signin" ng-submit="vm.getToken()" role="form">
     <div class="modal-header">
-        <h3>Sign in....</h3>
+        <h3 class="">Sign In or <a href="#">Register</a></h3>
     </div>
-    <div class="modal-footer">
-        <button type="submit" class="btn btn-success" ng-disabled="isBusy">Sign in...</button>
-        <button type="button" class="btn btn-warning" ng-disabled="isBusy">Cancel</button>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-2 col-sm-4">
+                <a href="#" class="btn btn-block btn-social btn-facebook">
+                    <i class="fa fa-facebook"></i>
+                    <span class="hidden-xs">Facebook</span>
+                </a>
+            </div>
+            <div class="col-xs-2 col-sm-4">
+                <a href="#" class="btn btn-block btn-social btn-twitter">
+                    <i class="fa fa-twitter"></i>
+                    <span class="hidden-xs">Twitter</span>
+                </a>
+            </div>
+            <div class="col-xs-2 col-sm-4">
+                <a href="#" class="btn btn-block btn-social btn-google-plus">
+                    <i class="fa fa-google-plus"></i>
+                    <span class="hidden-xs">Google+</span>
+                </a>
+            </div>
+            <div>
+                <div style="height: 0.3px; background-color:gray; text-align: center;margin-top: 60px !important;margin-bottom: 30px !important;">
+                    <span style="background-color: white; position: relative; top: 0;bottom:20px;width: 3em;">or</span>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:20px;">
+            <div class="col-xs-10 col-sm-8">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input type="text" class="form-control" name="username" placeholder="email address" ng-model="vm.username">
+                </div>
+                <div class="input-group" style="margin-top:1px;">
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    <input type="password" class="form-control" name="password" placeholder="Password" ng-model="vm.password">
+                </div>
+            </div>
+            <div class="col-xs-4 pull-right">
+                <button type="submit" class="btn btn-success" ng-disabled="isBusy" ng-click="vm.getToken()">Sign in...</button>
+                <button type="button" class="btn btn-warning" ng-disabled="isBusy" ng-click="vm.cancel()">Cancel</button>
+            </div>
+        </div>
     </div>
 </form>
