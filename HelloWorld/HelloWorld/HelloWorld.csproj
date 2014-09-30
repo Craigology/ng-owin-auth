@@ -186,7 +186,9 @@
     <Content Include="app\app.js" />
     <Content Include="app\common.js" />
     <Content Include="app\config.http.js" />
-    <Content Include="app\loginController.js" />
+    <Content Include="app\dialogs\signin.html" />
+    <Content Include="app\dialogs\signinController.js" />
+    <Content Include="app\shell.js" />
     <Content Include="content\bootstrap\bootstrap-theme.css" />
     <Content Include="content\bootstrap\bootstrap-theme.min.css" />
     <Content Include="content\bootstrap\bootstrap.css" />

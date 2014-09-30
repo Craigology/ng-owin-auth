@@ -18,7 +18,7 @@
             <span style="margin-top: 10px; padding-left: 100px;padding-right: 100px;text-align: center; font-size: 16px;">Loading...</span>
         </div>        
     </div>
-    <div id="mainContainer" ng-cloak="" ng-controller="loginController as vm">
+    <div id="mainContainer" ng-cloak="" ng-controller="shell as vm">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
@@ -26,7 +26,7 @@
                 </a>
                 <div class="navbar-right">
                     <p class="navbar-text pull-right" ng-show="isLoggedIn">Logged in as <a href="#">{{vm.username}}</a></p>
-                    <a class="btn btn-primary navbar-btn pull-right" ng-hide="isLoggedIn" ng-click="vm.getToken()"><i class="fa fa-sign-in"></i>&nbsp;Sign In</a>
+                    <a class="btn btn-primary navbar-btn pull-right" ng-hide="isLoggedIn" ng-click="vm.signIn()"><i class="fa fa-sign-in"></i>&nbsp;Sign In</a>
                 </div>
             </div>
         </nav>
@@ -47,7 +47,7 @@
     <script src="scripts/angular-resource.min.js" type="text/javascript"></script>
     <script src="scripts/angular-animate.min.js" type="text/javascript"></script>
     <script src="scripts/angular-spinner.min.js" type="text/javascript"></script>
-    <script src="scripts/angular-ui/ui-bootstrap.min.js" type="text/javascript"></script>
+    <script src="scripts/angular-ui/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
 
     <script src="scripts/promise-tracker.js" type="text/javascript"></script>
     <script src="scripts/promise-tracker-http-interceptor.js" type="text/javascript"></script>
@@ -55,6 +55,7 @@
     <script src="app/app.js" type="text/javascript"></script>
     <!--<script src="app/config.http.js" type="text/javascript"></script>-->
     <script src="app/common.js" type="text/javascript"></script>
-    <script src="app/loginController.js" type="text/javascript"></script>
+    <script src="app/shell.js" type="text/javascript"></script>
+    <script src="app/dialogs/signinController.js" type="text/javascript"></script>
 </body>
 </html>

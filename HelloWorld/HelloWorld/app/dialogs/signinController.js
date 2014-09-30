@@ -1,22 +1,19 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('app').controller("loginController", ['$scope', '$rootScope', '$http', "$q", "toast", loginController]);
+    angular.module('app').controller("signinController", ['$scope', '$rootScope', '$http', "$q", "$modal", "toast", signinController]);
 
-    function loginController($scope, $rootScope, $http, $q, toast) {
+    function signinController($scope, $rootScope, $http, $q, $modal, toast) {
         var vm = this;
 
         $scope.isBusy = false;
-        $scope.isLoggedIn = false;
+
         vm.getToken = getToken;
 
         (function activate() {
-
-
         });
 
         function getToken() {
-            vm.title = "Clicked";
 
             var currentContentType = $http.defaults.headers.post['Content-Type'];
             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
