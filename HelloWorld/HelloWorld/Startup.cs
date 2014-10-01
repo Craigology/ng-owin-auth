@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.Owin.Security.DataProtection;
+using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System.Web.Http;
 using System.Net.Http.Formatting;
@@ -20,9 +21,8 @@ namespace HelloWorld
             HttpConfiguration config = new HttpConfiguration();
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
-
-            //config.SuppressDefaultHostAuthentication();
-            //config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+            config.SuppressDefaultHostAuthentication();
+            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
             config.MapHttpAttributeRoutes();
 

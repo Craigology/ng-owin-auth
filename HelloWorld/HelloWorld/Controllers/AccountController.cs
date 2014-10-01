@@ -58,9 +58,9 @@ namespace HelloWorld.Controllers
         [Authorize]
         [HttpGet]
         [Route("Foo")]
-        public IHttpActionResult GetUser()
+        public IHttpActionResult Foo()
         {
-            return Ok("Yeah! Yeah!");
+            return Ok();
         }
 
         //[AllowAnonymous]

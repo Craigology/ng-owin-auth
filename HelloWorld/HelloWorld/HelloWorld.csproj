@@ -186,8 +186,10 @@
     <Content Include="app\app.js" />
     <Content Include="app\common.js" />
     <Content Include="app\config.http.js" />
+    <Content Include="app\dialogs\signout.html" />
     <Content Include="app\dialogs\signin.html" />
-    <Content Include="app\dialogs\signinController.js" />
+    <Content Include="app\dialogs\signinoutController.js" />
+    <Content Include="app\services\authService.js" />
     <Content Include="app\shell.js" />
     <Content Include="content\bootstrap-social.css" />
     <Content Include="content\bootstrap\bootstrap-theme.css" />
@@ -204,6 +206,7 @@
     <Content Include="content\images\iss_logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="content\site\callouts.css" />
     <Content Include="content\site\site.css" />
     <Content Include="content\toastr.css" />
     <Content Include="content\toastr.min.css" />
@@ -277,6 +280,7 @@
     <Content Include="scripts\spin.min.js" />
     <Content Include="scripts\toastr.js" />
     <Content Include="scripts\toastr.min.js" />
+    <None Include="scripts\_references.js" />
     <Content Include="templates\busy.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

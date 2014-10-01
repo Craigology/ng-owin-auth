@@ -31,6 +31,10 @@
         };
     });
 
+    app.config(function ($httpProvider) {
+        $httpProvider.interceptors.push('tokenProviderInterceptor');
+    });
+
     app.factory('toast', function () {
 
         return {

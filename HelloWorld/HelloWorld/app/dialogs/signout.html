@@ -1,0 +1,20 @@
+﻿<link href="../../content/bootstrap/bootstrap.min.css" rel="stylesheet" />
+<link href="../../content/site/callouts.css" rel="stylesheet" />
+<link href="../../content/fonts/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="../../content/bootstrap-social.css" rel="stylesheet" />
+<form novalidate id="signoutForm" name="form.signout" ng-submit="vm.signOut()" role="form">
+    <div class="modal-header">
+        <h3 class="">Sign Out Confirmation</h3>
+    </div>
+    <div class="modal-body" style="margin-top: 5px; margin-bottom: 5px;">
+        <div class="bs-callout bs-callout-warning">
+            <h4>Are you sure you want to sign out?</h4>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="pull-right">
+            <a class="btn btn-primary" ng-disabled="isBusy" ng-click="vm.signOut()"><i class="fa fa-sign-out"></i>&nbsp;Sign Out</a>            
+            <button type="button" class="btn btn-warning" ng-disabled="isBusy" ng-click="vm.cancel()">Not Yet</button>
+        </div>
+    </div>
+</form>
