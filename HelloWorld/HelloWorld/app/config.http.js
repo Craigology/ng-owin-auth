@@ -50,30 +50,35 @@
     //            }
     //        }];
 
-    app.factory('tokenProviderInterceptor', [
-        '$q', '$location', 'localStorageService', function($q, $location, localStorageService) {
+    app.config(function($httpProvider) {
+        $httpProvider.interceptors.push([
+            '$location', '$q', '$injector', function ($location, $q, $injector) {
 
-        var tokenProviderInterceptorFactory = {};
+                var tokenProviderInterceptorFactory = {};
 
-        tokenProviderInterceptorFactory.request = function(config) {
+                tokenProviderInterceptorFactory.request = function(config) {
 
-                config.headers = config.headers || {};
+                    config.headers = config.headers || {};
 
-                var authData = localStorageService.get('authorizationData');
-                if (authData) {
-                    config.headers.Authorization = 'Bearer ' + authData.token;
-                }
+                    var authData = $injector.get('localStorageService').get('authorizationData');
+                    if (authData) {
+                        config.headers.Authorization = 'Bearer ' + authData.token;
+                    }
 
-                return config;
-            };
+                    return config;
+                };
 
-            tokenProviderInterceptorFactory.responseError = function(rejection) {
-                if (rejection.status === 401) {
-                    $location.path('/login');
-                }
-                return $q.reject(rejection);
-            };
+                tokenProviderInterceptorFactory.responseError = function(rejection) {
+                    if (rejection.status === 401) {
+                        $injector.get('$state').go('signIn');
+                    } else {
+                        $injector.get('toast').error(rejection.statusText);
+                    }
+                    return $q.reject(rejection);
+                };
 
-            return tokenProviderInterceptorFactory;            
-        }]);
+                return tokenProviderInterceptorFactory;
+            }
+        ]);
+    });
 })();

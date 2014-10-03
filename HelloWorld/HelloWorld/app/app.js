@@ -3,8 +3,7 @@
 
     var app = angular.module('app', [
         // Angular modules 
-        'ngAnimate',
-        'ngRoute',
+        'ngAnimate',       
         'ui.bootstrap',
         'ngResource',
 
@@ -14,7 +13,8 @@
         // 3rd Party Modules
         'angularSpinner',
         'ajoslin.promise-tracker',
-         'LocalStorageModule'
+         'LocalStorageModule',
+         'ui.router'
     ]);
 
     app.config(function () {
@@ -29,10 +29,6 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         };
-    });
-
-    app.config(function ($httpProvider) {
-        $httpProvider.interceptors.push('tokenProviderInterceptor');
     });
 
     app.factory('toast', function () {

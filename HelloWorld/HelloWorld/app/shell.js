@@ -1,21 +1,25 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('app').controller("shell", ['$scope', '$rootScope', '$http', "$q", "$modal", "toast", "authService", shell]);
+    angular.module('app').controller("shell", ['$scope', '$rootScope', '$http', "$q", "$modal", "$state", "toast", "authService", shell]);
 
-    function shell($scope, $rootScope, $http, $q, $modal, toast, $authService) {
+    function shell($scope, $rootScope, $http, $q, $modal, $state, toast, $authService) {
         var vm = this;
 
         vm.signIn = signIn;
         vm.signOut = signOut;
-        vm.foo = foo;
+        vm.someAuthenticatedApi = someAuthenticatedApi;
         vm.username = "";
+
+        $state.go('landing');
 
         $scope.$on('loggedIn', function (event, username) {
             vm.isLoggedIn = true;
             $scope.isLoggedIn = true;
             vm.username = username;
             toast.success(username + ' logged in.');
+
+            $state.go('home');
         });
 
         $scope.$on('loggedOut', function (event, username) {
@@ -50,11 +54,11 @@
             });
         }
 
-        function foo() {
+        function someAuthenticatedApi() {
 
             var deferred = $q.defer();
 
-            $http.get('/Foo').success(function (response) {
+            $http.get('/someAuthenticatedApi').success(function (response) {
 
                 deferred.resolve(response);
 

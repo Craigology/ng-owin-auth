@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using HelloWorld.Models;
 using Microsoft.AspNet.Identity;
@@ -57,33 +58,11 @@ namespace HelloWorld.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("Foo")]
-        public IHttpActionResult Foo()
+        [Route("someAuthenticatedApi")]
+        public IHttpActionResult SomeAuthenticatedApi()
         {
             return Ok();
         }
-
-        //[AllowAnonymous]
-        //[Route("Login")]
-        //public async Task<IHttpActionResult> Login(UserModel userModel)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    var user = new ApplicationUser
-        //    {
-        //        UserName = userModel.UserName
-        //    };
-
-        //    var result = await _userManager.FindAsync(userModel.UserName, userModel.Password);
-
-        //    IHttpActionResult errorResult = GetErrorResult(result);
-
-        //    return errorResult ?? Ok();            
-        //}
-
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {

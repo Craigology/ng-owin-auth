@@ -185,12 +185,15 @@
   <ItemGroup>
     <Content Include="app\app.js" />
     <Content Include="app\common.js" />
+    <Content Include="app\config.route.js" />
     <Content Include="app\config.http.js" />
     <Content Include="app\dialogs\signout.html" />
     <Content Include="app\dialogs\signin.html" />
     <Content Include="app\dialogs\signinoutController.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\shell.js" />
+    <Content Include="app\views\landing\partial-landing.html" />
+    <Content Include="app\views\home\partial-home.html" />
     <Content Include="content\bootstrap-social.css" />
     <Content Include="content\bootstrap\bootstrap-theme.css" />
     <Content Include="content\bootstrap\bootstrap-theme.min.css" />
@@ -222,6 +225,8 @@
     <Content Include="scripts\angular-route.min.js" />
     <Content Include="scripts\angular-spinner.js" />
     <Content Include="scripts\angular-spinner.min.js" />
+    <Content Include="scripts\angular-ui\angular-ui-router.js" />
+    <Content Include="scripts\angular-ui\angular-ui-router.min.js" />
     <Content Include="scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="scripts\angular-ui\ui-bootstrap-tpls.min.js" />
     <Content Include="scripts\angular-ui\ui-bootstrap.js" />
