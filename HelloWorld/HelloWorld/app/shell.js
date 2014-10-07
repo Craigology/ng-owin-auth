@@ -1,9 +1,9 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('app').controller("shell", ['$scope', '$rootScope', '$http', "$q", "$modal", "$state", "toast", "authService", shell]);
+    angular.module('app').controller("shell", ['$scope', '$rootScope', '$http', "$q", "$log", "$modal", "$state", "toast", "authService", "$urlRouter", "$location", shell]);
 
-    function shell($scope, $rootScope, $http, $q, $modal, $state, toast, $authService) {
+    function shell($scope, $rootScope, $http, $q, $log, $modal, $state, toast, $authService, $urlRouter, $location) {
         var vm = this;
 
         vm.signIn = signIn;
@@ -11,64 +11,101 @@
         vm.someAuthenticatedApi = someAuthenticatedApi;
         vm.username = "";
 
-        $state.go('landing');
+        $rootScope.isLoggedIn = false;
+        $scope.isLoggedIn = false;
+        vm.isLoggedIn = false;
 
         $scope.$on('loggedIn', function (event, username) {
-            vm.isLoggedIn = true;
+            $log.log("Shell received loggedIn event");
             $scope.isLoggedIn = true;
+            $rootScope.isLoggedIn = true;
+            vm.isLoggedIn = true;
             vm.username = username;
             toast.success(username + ' logged in.');
 
-            $state.go('home');
+            $state.go('home', {}, { reload: true });
         });
 
-        $scope.$on('loggedOut', function (event, username) {
-            vm.isLoggedIn = false;
+        $scope.$on('loggedOut', function (event) {
+            $log.log("Shell received loggedOut event");
             $scope.isLoggedIn = false;
+            $rootScope.isLoggedIn = false;
+            vm.isLoggedIn = false;
+
             vm.username = null;
+
+            $state.go('landing', {},  { reload: true });
         });
 
-        $scope.isBusy = true;
         $authService.checkForExistingToken();
-        $scope.isBusy = false;
-
         if ($authService.authentication.isAuth == true) {
-            $scope.$broadcast('loggedIn', $authService.authentication.userName);
+           // $log.log("Shell checkForExistingToken() isAuth=" + $authService.authentication.isAuth);
+            $authService.broadcastSignIn();
         }
+        else {
+            $log.log("Shell checkForExistingToken() isAuth=" + $authService.authentication.isAuth);
+            $authService.broadcastSignOut();
+        };
+
+        $scope.$on('$viewContentLoading', function (event, viewConfig) {
+            $authService.checkForExistingToken();
+
+            if ($authService.authentication.isAuth == true) {
+
+                if ($location.$$url === "/landing") {
+                    // stop the change!
+                    event.preventDefault();
+                    $state.go("home");
+                } else {
+                    // if we do, then continue
+                    //$urlRouter.sync();
+                }
+
+            }
+
+            if ($authService.authentication.isAuth == false) {
+
+                if ($location.$$url === "/home") {
+                    // stop the change!
+                    event.preventDefault();
+
+                    $state.go("landing");
+                } else {
+                    // if we do, then continue
+                    //$urlRouter.sync();
+                }
+            }
+        });
 
         (function activate() {
 
-        });
-
-        function signIn() {
-            $modal.open({
-                templateUrl: 'app/dialogs/signin.html',
-                controller: 'signinoutController as vm'
             });
+
+            function signIn() {
+                $modal.open({
+                    templateUrl: 'app/dialogs/signin.html',
+                    controller: 'signinoutController as vm'
+                });
+            }
+
+            function signOut() {
+                $modal.open({
+                    templateUrl: 'app/dialogs/signout.html',
+                    controller: 'signinoutController as vm'
+                });
+            }
+
+            function someAuthenticatedApi() {
+
+                var deferred = $q.defer();
+
+                $http.get('/someAuthenticatedApi').success(function(response) {
+                    deferred.resolve(response);
+                }).error(function(err, status) {
+                    deferred.reject(err);
+                });
+
+                return deferred.promise;
+            };
         }
-
-        function signOut() {
-            $modal.open({
-                templateUrl: 'app/dialogs/signout.html',
-                controller: 'signinoutController as vm'
-            });
-        }
-
-        function someAuthenticatedApi() {
-
-            var deferred = $q.defer();
-
-            $http.get('/someAuthenticatedApi').success(function (response) {
-
-                deferred.resolve(response);
-
-            }).error(function (err, status) {
-
-                deferred.reject(err);
-            });
-
-            return deferred.promise;
-        };     
-    }
 })();
-

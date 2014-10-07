@@ -1,47 +1,56 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('app').controller("signinoutController", ['$scope', '$rootScope', '$http', "$q", "$modal", "toast", "localStorageService", "authService", signinoutController]);
+    angular.module('app').controller("signinoutController", ['$scope', '$rootScope', '$http', "$q", "$modal", "toast", "localStorageService", "authService", "usSpinnerService", signinoutController]);
 
-    function signinoutController($scope, $rootScope, $http, $q, $modal, toast, $localStorageService, $authService) {
+    function signinoutController($scope, $rootScope, $http, $q, $modal, toast, $localStorageService, $authService, usSpinnerService) {
         var vm = this;
-
-        $scope.isBusy = false;
 
         vm.cancel = cancel;
         vm.username = $localStorageService.get('recentUsername');
         vm.password = "";
+        vm.isBusy = false;
 
         vm.signIn = function () {
-            $scope.isBusy = true;
+
+            vm.isBusy = true;
+            usSpinnerService.spin('spinner-local-submit-button');
+
             $authService
                 .login({ userName: vm.username, password: vm.password })
                 .then(function(response) {
+
                     $rootScope.isLoggedIn = true;
+                    $rootScope.token = response;
+                    
+                    $localStorageService.set('recentUsername', $rootScope.token.userName);
+
                     $scope.$close(true);
-                    vm.token = response;
-                    vm.username = vm.token.userName;
-                    $localStorageService.set('recentUsername', vm.username);
-                    $rootScope.$broadcast('loggedIn', vm.username);
 
                 }, function (error) {
                     toast.error('Failed to login, reason: ' + error);
                 }).finally(function () {
-                    $scope.isBusy = false;
+                    usSpinnerService.stop('spinner-local-submit-button');
+                    vm.isBusy = false;
                 });
         };
 
         vm.signOut = function () {
 
-            $scope.isBusy = true;
+            vm.isBusy = true;
+            usSpinnerService.spin('spinner-local-submit-button');
+
             $authService.logOut();
 
-            $rootScope.isLoggedIn = false;
-            $scope.$close(true);
-            vm.token = null;
+            $rootScope.isLoggedIn = true;
+            $rootScope.token = null;
+
             vm.username = null;
-            $rootScope.$broadcast('loggedOut');
-            $scope.isBusy = false;
+
+            usSpinnerService.stop('spinner-local-submit-button');
+            vm.isBusy = false;
+
+            $scope.$close(true);
         };
 
         function cancel() {

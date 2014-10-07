@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using HelloWorld.Models;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
@@ -51,6 +52,7 @@ namespace HelloWorld.Controllers
         [AllowAnonymous]
         public async Task Authorize()
         {
+            Thread.Sleep(1000);
             var claims = new ClaimsPrincipal(User).Claims.ToArray();
             var identity = new ClaimsIdentity(claims, "Bearer");
             Startup.AuthenticationManager.SignIn(identity);
@@ -61,6 +63,7 @@ namespace HelloWorld.Controllers
         [Route("someAuthenticatedApi")]
         public IHttpActionResult SomeAuthenticatedApi()
         {
+            Thread.Sleep(2000);
             return Ok();
         }
 

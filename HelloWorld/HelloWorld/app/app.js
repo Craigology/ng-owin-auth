@@ -46,6 +46,6 @@
     app.run(["$rootScope", "promiseTracker",  function ($rootScope, promiseTracker) {
 
         $rootScope.loadingTracker = promiseTracker({ activationDelay: 0, minDuration: 250 });
-    }] );
+    }]);
 
 })();
