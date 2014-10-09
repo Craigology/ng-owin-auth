@@ -41,6 +41,6 @@
                 ]
             });
 
-        $urlRouterProvider.when('', '/');
+        $urlRouterProvider.otherwise("/");
     });
 })();

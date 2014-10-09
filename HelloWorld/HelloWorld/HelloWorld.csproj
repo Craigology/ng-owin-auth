@@ -97,6 +97,9 @@
     <Reference Include="Microsoft.Owin.Cors">
       <HintPath>..\packages\Microsoft.Owin.Cors.3.0.0\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Owin.FileSystems">
+      <HintPath>..\packages\Microsoft.Owin.FileSystems.3.0.0\lib\net45\Microsoft.Owin.FileSystems.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Owin.Host.IIS">
       <HintPath>..\packages\Microsoft.Owin.Host.IIS.1.0.0-alpha1\lib\net45\Microsoft.Owin.Host.IIS.dll</HintPath>
     </Reference>
@@ -128,6 +131,9 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Security.Twitter">
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.StaticFiles">
+      <HintPath>..\packages\Microsoft.Owin.StaticFiles.3.0.0\lib\net45\Microsoft.Owin.StaticFiles.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -292,9 +298,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AngularServer.cs" />
     <Compile Include="App_Start\HelloMiddleware.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\UrlRewriterMiddleware.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Migrations\201409201417366_IdentityInitial.cs" />
     <Compile Include="Migrations\201409201417366_IdentityInitial.Designer.cs">
@@ -307,7 +315,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Compile Include="App_Start\Startup.IoC.cs" />
     <None Include="Properties\PublishProfiles\HelloWorld9626 - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\HelloWorld9626 - Web Deploy.pubxml" />

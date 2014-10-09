@@ -53,10 +53,6 @@ namespace HelloWorld
             .AsImplementedInterfaces()
             .InstancePerRequest();
 
-            builder
-                .RegisterType<HelloMiddleware>()
-                .InstancePerRequest();
-
 			// Build the container.
 			var container = builder.Build();
 

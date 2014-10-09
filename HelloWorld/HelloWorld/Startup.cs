@@ -1,6 +1,11 @@
 ﻿using System.Linq;
+using HelloWorld.App_Start;
+using Microsoft.Owin;
+using Microsoft.Owin.Extensions;
+using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.OAuth;
+using Microsoft.Owin.StaticFiles;
 using Owin;
 using System.Web.Http;
 using System.Net.Http.Formatting;
@@ -16,7 +21,7 @@ namespace HelloWorld
         internal static IDataProtectionProvider DataProtectionProvider { get; private set; }
 
         public void Configuration(IAppBuilder app)
-        {
+        {            
             // Configure Web API for self-host. 
             HttpConfiguration config = new HttpConfiguration();
 
@@ -24,7 +29,7 @@ namespace HelloWorld
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-            config.MapHttpAttributeRoutes();
+            config.MapHttpAttributeRoutes();            
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -37,6 +42,10 @@ namespace HelloWorld
 
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
+
+            //app.UseStageMarker(PipelineStage.MapHandler);
+            //app.UseStaticFiles();
+            //app.UseAngularServer(".", "/index.html"); 
 
             ////// Enable the application to use a cookie to store information for the signed in user
             ////app.UseCookieAuthentication(new CookieAuthenticationOptions
