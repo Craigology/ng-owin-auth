@@ -36,9 +36,5 @@ namespace HelloWorld.Models
             : base("ApplicationDbContext")
         {
         }
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
     }
 }

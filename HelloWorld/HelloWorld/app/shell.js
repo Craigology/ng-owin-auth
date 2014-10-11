@@ -39,7 +39,6 @@
 
         $authService.checkForExistingToken();
         if ($authService.authentication.isAuth == true) {
-           // $log.log("Shell checkForExistingToken() isAuth=" + $authService.authentication.isAuth);
             $authService.broadcastSignIn();
         }
         else {
@@ -56,11 +55,7 @@
                     // stop the change!
                     event.preventDefault();
                     $state.go("home");
-                } else {
-                    // if we do, then continue
-                    //$urlRouter.sync();
                 }
-
             }
 
             if ($authService.authentication.isAuth == false) {
@@ -70,9 +65,6 @@
                     event.preventDefault();
 
                     $state.go("landing");
-                } else {
-                    // if we do, then continue
-                    //$urlRouter.sync();
                 }
             }
         });

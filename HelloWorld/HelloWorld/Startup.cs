@@ -1,11 +1,10 @@
 ﻿using System.Linq;
-using HelloWorld.App_Start;
+using Autofac;
 using Microsoft.Owin;
 using Microsoft.Owin.Extensions;
-using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.OAuth;
-using Microsoft.Owin.StaticFiles;
+using Nancy;
 using Owin;
 using System.Web.Http;
 using System.Net.Http.Formatting;
@@ -15,37 +14,38 @@ namespace HelloWorld
 {
     public partial class Startup
     {
-        //public const string ExternalCookieAuthenticationType = CookieAuthenticationDefaults.AuthenticationType;
-        //public const string ExternalOAuthAuthenticationType = "ExternalToken";
-
         internal static IDataProtectionProvider DataProtectionProvider { get; private set; }
 
         public void Configuration(IAppBuilder app)
         {            
             // Configure Web API for self-host. 
-            HttpConfiguration config = new HttpConfiguration();
+            var config = new HttpConfiguration();
 
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-            config.MapHttpAttributeRoutes();            
-
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { action = RouteParameter.Optional, id = RouteParameter.Optional }
-            );
-
-            ConfigureIoC(config, app);
-            ConfigureAuth(app);
-
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
 
-            //app.UseStageMarker(PipelineStage.MapHandler);
-            //app.UseStaticFiles();
-            //app.UseAngularServer(".", "/index.html"); 
+            var builder = new ContainerBuilder();
+            var container = builder.Build();
+
+            app.UseStageMarker(PipelineStage.Authenticate);
+            ConfigureAuth(app, container);
+
+            app.UseStageMarker(PipelineStage.MapHandler);
+            app.UseNancy(nancyOptions =>
+            {
+                var ctx = new OwinContext(app.Properties);
+                AuthenticationManager = ctx.Authentication;
+
+                nancyOptions.Bootstrapper = new HelloWorldBootstrapper().UseContainer(container);
+
+                nancyOptions.PerformPassThrough = context =>
+                    context.Response.StatusCode == HttpStatusCode.NotFound ||
+                    context.Response.StatusCode == HttpStatusCode.InternalServerError;
+            });
 
             ////// Enable the application to use a cookie to store information for the signed in user
             ////app.UseCookieAuthentication(new CookieAuthenticationOptions
@@ -77,23 +77,6 @@ namespace HelloWorld
 
             var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
-
         }
-
-        //public void ConfigureOAuth(IAppBuilder app)
-        //{
-        //    OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
-        //    {
-        //        AllowInsecureHttp = true,
-        //        TokenEndpointPath = new PathString("/token"),
-        //        AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-        //        Provider = new IssAuthorizationServerProvider()
-        //    };
-
-        //    // Token Generation
-        //    app.UseOAuthAuthorizationServer(OAuthServerOptions);
-        //    app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
-
-        //}
     }
 }

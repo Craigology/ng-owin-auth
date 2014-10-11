@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 
@@ -15,9 +16,10 @@ namespace HelloWorld.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] {"*"});
+            // This must be set in the Nancy Owin extensions, because leaving this here incurs an already added exception.
+            //context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-            var applicationUserManager = context.OwinContext.Get<ApplicationUserManager>("ApplicationUserManager");
+            var applicationUserManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
             var user = await applicationUserManager.FindAsync(context.UserName, context.Password);
             if (user == null)
@@ -48,11 +50,6 @@ namespace HelloWorld.Providers
             if (emailClaim != null)
             {
                 context.AdditionalResponseParameters.Add("email", emailClaim.Value);                
-            }
-            var sidClaim = context.Identity.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid);
-            if (sidClaim != null)
-            {
-                context.AdditionalResponseParameters.Add("sid", sidClaim.Value);
             }
         }
     }

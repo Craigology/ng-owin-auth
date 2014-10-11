@@ -40,12 +40,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AjaxMin">
-      <HintPath>..\packages\AjaxMin.4.48.4489.28432\lib\net20\AjaxMin.dll</HintPath>
-    </Reference>
-    <Reference Include="Antlr3.Runtime">
-      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
@@ -58,17 +52,11 @@
     <Reference Include="Autofac.Integration.WebApi.Owin">
       <HintPath>..\packages\Autofac.WebApi2.Owin.3.2.0\lib\net45\Autofac.Integration.WebApi.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="EcmaScript.NET">
-      <HintPath>..\packages\YUICompressor.NET.2.0.0.0\lib\NET20\EcmaScript.NET.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Iesi.Collections">
-      <HintPath>..\packages\YUICompressor.NET.2.0.0.0\lib\NET20\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -96,9 +84,6 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Cors">
       <HintPath>..\packages\Microsoft.Owin.Cors.3.0.0\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.FileSystems">
-      <HintPath>..\packages\Microsoft.Owin.FileSystems.3.0.0\lib\net45\Microsoft.Owin.FileSystems.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Host.IIS">
       <HintPath>..\packages\Microsoft.Owin.Host.IIS.1.0.0-alpha1\lib\net45\Microsoft.Owin.Host.IIS.dll</HintPath>
@@ -132,12 +117,17 @@
     <Reference Include="Microsoft.Owin.Security.Twitter">
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin.StaticFiles">
-      <HintPath>..\packages\Microsoft.Owin.StaticFiles.3.0.0\lib\net45\Microsoft.Owin.StaticFiles.dll</HintPath>
+    <Reference Include="Nancy">
+      <HintPath>..\packages\Nancy.0.23.2\lib\net40\Nancy.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    <Reference Include="Nancy.Bootstrappers.Autofac">
+      <HintPath>..\packages\Nancy.Bootstrappers.Autofac.0.23.2\lib\net40\Nancy.Bootstrappers.Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.MSOwinSecurity">
+      <HintPath>..\packages\Nancy.MSOwinSecurity.1.0.1\lib\net45\Nancy.MSOwinSecurity.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Owin">
+      <HintPath>..\packages\Nancy.Owin.0.23.2\lib\net40\Nancy.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -146,9 +136,7 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="SquishIt.Framework">
-      <HintPath>..\packages\SquishIt.0.9.6\lib\SquishIt.Framework.dll</HintPath>
-    </Reference>
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.IdentityModel.Tokens.Jwt">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.4.0.0\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
@@ -162,6 +150,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Cors, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.2\lib\net45\System.Web.Cors.dll</HintPath>
@@ -173,20 +162,10 @@
     <Reference Include="System.Web.Http.Owin">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.2\lib\net45\System.Web.Http.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Optimization">
-      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
-    </Reference>
-    <Reference Include="Yahoo.Yui.Compressor">
-      <HintPath>..\packages\YUICompressor.NET.2.0.0.0\lib\NET20\Yahoo.Yui.Compressor.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
@@ -298,12 +277,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AngularServer.cs" />
-    <Compile Include="App_Start\HelloMiddleware.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="App_Start\UrlRewriterMiddleware.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="App_Start\Startup.Nancy.cs" />
+    <Compile Include="Controllers\AccountNancyModule.cs" />
     <Compile Include="Migrations\201409201417366_IdentityInitial.cs" />
     <Compile Include="Migrations\201409201417366_IdentityInitial.Designer.cs">
       <DependentUpon>201409201417366_IdentityInitial.cs</DependentUpon>
@@ -318,7 +295,6 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <Compile Include="App_Start\Startup.IoC.cs" />
     <None Include="Properties\PublishProfiles\HelloWorld9626 - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\HelloWorld9626 - Web Deploy.pubxml" />
     <Content Include="scripts\angular.min.js.map" />
@@ -335,6 +311,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Domain\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201409201417366_IdentityInitial.resx">
