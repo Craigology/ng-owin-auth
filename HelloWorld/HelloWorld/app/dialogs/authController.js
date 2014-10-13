@@ -1,9 +1,9 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('app').controller("signinoutController", ['$scope', '$rootScope', '$http', "$q", "$modal", "toast", "localStorageService", "authService", "usSpinnerService", signinoutController]);
+    angular.module('app').controller("authController", ['$scope', '$rootScope', '$http', "$q", "$modal", "toast", "localStorageService", "authService", "usSpinnerService", authController]);
 
-    function signinoutController($scope, $rootScope, $http, $q, $modal, toast, $localStorageService, $authService, usSpinnerService) {
+    function authController($scope, $rootScope, $http, $q, $modal, toast, $localStorageService, $authService, usSpinnerService) {
         var vm = this;
 
         vm.cancel = cancel;
@@ -11,13 +11,13 @@
         vm.password = "";
         vm.isBusy = false;
 
-        vm.signIn = function () {
+        vm.signin = function () {
 
             vm.isBusy = true;
             usSpinnerService.spin('spinner-local-submit-button');
 
             $authService
-                .login({ userName: vm.username, password: vm.password })
+                .signin({ userName: vm.username, password: vm.password })
                 .then(function(response) {
 
                     $rootScope.isLoggedIn = true;
@@ -35,12 +35,12 @@
                 });
         };
 
-        vm.signOut = function () {
+        vm.signout = function () {
 
             vm.isBusy = true;
             usSpinnerService.spin('spinner-local-submit-button');
 
-            $authService.logOut();
+            $authService.signout();
 
             $rootScope.isLoggedIn = true;
             $rootScope.token = null;

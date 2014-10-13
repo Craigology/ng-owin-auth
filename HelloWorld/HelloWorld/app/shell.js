@@ -6,8 +6,8 @@
     function shell($scope, $rootScope, $http, $q, $log, $modal, $state, toast, $authService, $urlRouter, $location) {
         var vm = this;
 
-        vm.signIn = signIn;
-        vm.signOut = signOut;
+        vm.signin = signin;
+        vm.signout = signout;
         vm.someAuthenticatedApi = someAuthenticatedApi;
         vm.username = "";
 
@@ -73,17 +73,17 @@
 
             });
 
-            function signIn() {
+            function signin() {
                 $modal.open({
                     templateUrl: 'app/dialogs/signin.html',
-                    controller: 'signinoutController as vm'
+                    controller: 'authController as vm'
                 });
             }
 
-            function signOut() {
+            function signout() {
                 $modal.open({
                     templateUrl: 'app/dialogs/signout.html',
-                    controller: 'signinoutController as vm'
+                    controller: 'authController as vm'
                 });
             }
 

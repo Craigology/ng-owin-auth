@@ -35,7 +35,7 @@
                         console.log("Entered state 'signIn'");
                         $modal.open({
                             templateUrl: 'app/dialogs/signin.html',
-                            controller: 'signinoutController as vm'
+                            controller: 'authController as vm'
                         });
                     }
                 ]

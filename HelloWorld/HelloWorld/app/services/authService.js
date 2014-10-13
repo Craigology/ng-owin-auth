@@ -13,16 +13,16 @@
 
         var _saveRegistration = function(registration) {
 
-            logOut();
+            signout();
 
             return $http.post('api/account/register', registration).then(function(response) {
                 return response;
             });
         };
 
-        var _login = function(loginData) {
+        var _signin = function(signinData) {
 
-            var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
+            var data = "grant_type=password&username=" + signinData.userName + "&password=" + signinData.password;
 
             var deferred = $q.defer();
 
@@ -32,23 +32,23 @@
             }).success(function(response) {
 
                 localStorageService.set('authorizationData',
-                { token: response.access_token, userName: loginData.userName });
+                { token: response.access_token, userName: signinData.userName });
 
                 _authentication.isAuth = true;
-                _authentication.userName = loginData.userName;
+                _authentication.userName = signinData.userName;
                 _broadcastSignIn();
 
                 deferred.resolve(response);
 
             }).error(function(err, status) {
-                _logOut();
+                _signout();
                 deferred.reject(err);
             });
 
             return deferred.promise;
         };
 
-        var _logOut = function() {
+        var _signout = function() {
 
             localStorageService.remove('authorizationData');
 
@@ -76,8 +76,8 @@
         };
 
         authServiceFactory.saveRegistration = _saveRegistration;
-        authServiceFactory.login = _login;
-        authServiceFactory.logOut = _logOut;
+        authServiceFactory.signin = _signin;
+        authServiceFactory.signout = _signout;
         authServiceFactory.checkForExistingToken = _checkForExistingToken;
         authServiceFactory.authentication = _authentication;
         authServiceFactory.broadcastSignIn = _broadcastSignIn;

@@ -174,7 +174,7 @@
     <Content Include="app\config.http.js" />
     <Content Include="app\dialogs\signout.html" />
     <Content Include="app\dialogs\signin.html" />
-    <Content Include="app\dialogs\signinoutController.js" />
+    <Content Include="app\dialogs\authController.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\shell.js" />
     <Content Include="app\views\landing\partial-landing.html" />
