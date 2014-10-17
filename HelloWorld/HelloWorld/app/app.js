@@ -57,9 +57,9 @@
 
                 console.log(scope, elem, attr);
 
-                scope.$watch(function () { return scope.serverErrors.$invalid; }, function (newVal, oldVal) {
+                scope.$watch(function () { return ngModel.$invalid; }, function (newVal, oldVal) {
                     if (newVal === true && !oldVal) {
-                        elem.toggleClass('has-error', true);
+                        elem.parent().parent().toggleClass('has-error', true);
                     }
                 });
             }

@@ -16,16 +16,25 @@
 
         vm.isBusy = false;
 
+        $scope.previousErrors = [];
+
         vm.register = function () {
 
             //$scope.$broadcast('show-errors-check-validity');
-            //if ($scope.registerForm.$invalid) { return; }
+            $scope.registerForm.$setPristine();
 
             vm.isBusy = true;
 
             usSpinnerService.spin('spinner-local-submit-button');
 
-            $scope.registerForm.$setPristine();
+            angular.forEach($scope.previousErrors, function(value, key) {
+                var elem = $scope.registerForm[value];
+                elem.$invalid = false;
+                elem.$setValidity('x', true);
+                elem.$error.serverMessages.length = 0;
+            });
+
+            $scope.previousErrors.length = 0;
 
             $authService
                 .register(vm.registration)
@@ -36,14 +45,18 @@
 
                     angular.forEach(result.data.errors, function (value, key) {
 
-                        $scope.registerForm[value.key].$invalid = true;
-                        $scope.registerForm[value.key].$setValidity('', false);
-                        $scope.registerForm[value.key].$error.serverMessages = [];                        
+                        var elem = $scope.registerForm[value.key];
+                        elem.$invalid = false;
+                        elem.$setValidity('x', true);
+                        elem.$error.serverMessages = [];
                     });
 
                     angular.forEach(result.data.errors, function (value, key) {
 
-                        $scope.registerForm[value.key].$error.serverMessages.push(value.error);
+                        var elem = $scope.registerForm[value.key];
+                        elem.$error.serverMessages.push(value.error);
+
+                        $scope.previousErrors.push(value.key);
                     });
 
                     //$scope.$broadcast('show-errors-check-validity');

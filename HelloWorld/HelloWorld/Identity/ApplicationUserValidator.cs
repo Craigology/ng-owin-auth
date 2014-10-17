@@ -34,7 +34,7 @@ namespace HelloWorld.Identity
                     }
                     else
                     {
-                        yield return string.Format("name: {0}.", individualError.TrimEnd('.'));
+                        yield return string.Format("username: {0}.", individualError.TrimEnd('.'));
                     }
                 }
             }
