@@ -76,14 +76,14 @@
             function signin() {
                 $modal.open({
                     templateUrl: 'app/dialogs/signin.html',
-                    controller: 'authController as vm'
+                    controller: 'signinoutController as vm'
                 });
             }
 
             function signout() {
                 $modal.open({
                     templateUrl: 'app/dialogs/signout.html',
-                    controller: 'authController as vm'
+                    controller: 'signinoutController as vm'
                 });
             }
 

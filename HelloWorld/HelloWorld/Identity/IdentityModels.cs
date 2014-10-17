@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace HelloWorld.Models
+namespace HelloWorld.Identity
 {
-    public class UserModel
+    public class UserRegistrationModel
     {
-        public string UserName { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
     }

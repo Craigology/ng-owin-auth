@@ -1,31 +1,10 @@
-﻿using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using HelloWorld.Models;
+using System;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.DataProtection;
 
-namespace HelloWorld
+namespace HelloWorld.Identity
 {
-    public class EmailService : IIdentityMessageService
-    {
-        public Task SendAsync(IdentityMessage message)
-        {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
-        }
-    }
-
-    public class SmsService : IIdentityMessageService
-    {
-        public Task SendAsync(IdentityMessage message)
-        {
-            // Plug in your SMS service here to send a text message.
-            return Task.FromResult(0);
-        }
-    }
-
     // Configure the application user manager which is used in this application.
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
@@ -43,22 +22,11 @@ namespace HelloWorld
             //alternatively use this if you are running in Azure Web Sites
             this.UserTokenProvider = new EmailTokenProvider<ApplicationUser, string>();
 
-            // Configure validation logic for usernames
-            UserValidator = new UserValidator<ApplicationUser>(this)
-            {
-                AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
-            };
+            // Custom validation logic for usernames.
+            UserValidator = new ApplicationUserValidator(this);
 
-            // Configure validation logic for passwords
-            PasswordValidator = new PasswordValidator
-            {
-                RequiredLength = 6,
-                RequireNonLetterOrDigit = false,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true
-            };
+            // Custom validation logic for passwords.
+            PasswordValidator = new ApplicationPasswordValidator();
 
             // Configure user lockout defaults
             UserLockoutEnabledByDefault = true;
@@ -78,20 +46,6 @@ namespace HelloWorld
             });
             EmailService = new EmailService();
             SmsService = new SmsService();
-        }
-    }
-
-    // Configure the application sign-in manager which is used in this application.  
-    public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
-    {
-        public ApplicationSignInManager(ApplicationUserManager userManager)                       
-            : base(userManager, Startup.AuthenticationManager)
-        {
-        }
-
-        public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
-        {
-            return user.GenerateUserIdentityAsync((ApplicationUserManager) UserManager);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/// <autosync enabled="true" />
-/// <reference path="../app/dialogs/authController.js" />
+/// <reference path="../app/dialogs/signinoutController.js" />
 /// <reference path="../app/services/authservice.js" />
 /// <reference path="../app/app.js" />
 /// <reference path="../app/common.js" />

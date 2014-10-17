@@ -11,12 +11,23 @@
                 userName: ""
             };
 
-        var _saveRegistration = function(registration) {
+        var _register = function (registration) {
 
-            signout();
+            var deferred = $q.defer();
 
-            return $http.post('api/account/register', registration).then(function(response) {
-                return response;
+            return $http.post('api/account/register', registration)
+            .success(function (response) {
+                localStorageService.set('authorizationData',
+                { token: response.access_token, userName: signinData.userName });
+
+                _authentication.isAuth = true;
+                _authentication.userName = signinData.userName;
+                _broadcastSignIn();
+
+                deferred.resolve(response);
+
+            }).error(function (err, status) {            
+                deferred.reject(err);
             });
         };
 
@@ -75,7 +86,7 @@
             $rootScope.$broadcast('loggedOut');
         };
 
-        authServiceFactory.saveRegistration = _saveRegistration;
+        authServiceFactory.register = _register;
         authServiceFactory.signin = _signin;
         authServiceFactory.signout = _signout;
         authServiceFactory.checkForExistingToken = _checkForExistingToken;

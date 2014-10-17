@@ -1,6 +1,6 @@
 ﻿using System;
 using Autofac;
-using HelloWorld.Providers;
+using HelloWorld.Identity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -9,7 +9,6 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using HelloWorld.Models;
 
 namespace HelloWorld
 {
@@ -29,7 +28,7 @@ namespace HelloWorld
             {
                 TokenEndpointPath = new PathString("/Token"),
                 AuthorizeEndpointPath = new PathString("/Authorize"),
-                Provider = new IssAuthorizationServerProvider(),
+                Provider = new AuthorizationServerProvider(),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 AllowInsecureHttp = true
             };

@@ -16,7 +16,6 @@
                 }
             });
 
-
         $stateProvider
             .state('landing', {
                 url: '/landing',
@@ -26,21 +25,29 @@
                 }
             });
 
-
         $stateProvider
-            .state("signIn", {
-                url: "/signIn",
+            .state("signin", {
+                url: "/signin",
                 onEnter: [
                     '$modal', function ($modal) {
-                        console.log("Entered state 'signIn'");
+                        console.log("Entered state 'signin'");
                         $modal.open({
-                            templateUrl: 'app/dialogs/signin.html',
-                            controller: 'authController as vm'
+                            templateUrl: 'app/dialogs/signin.html'
                         });
                     }
                 ]
             });
 
-        $urlRouterProvider.otherwise("/");
+        $stateProvider
+            .state("" +
+            "register", {
+                url: "/register",
+                templateUrl: 'app/views/register/partial-register.html',
+                onEnter: function() {
+                    console.log("Entered state: 'register'");
+                }
+            });
+
+        //$urlRouterProvider.otherwise("/");
     });
 })();

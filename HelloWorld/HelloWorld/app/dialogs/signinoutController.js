@@ -1,14 +1,15 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('app').controller("authController", ['$scope', '$rootScope', '$http', "$q", "$modal", "toast", "localStorageService", "authService", "usSpinnerService", authController]);
+    angular.module('app').controller("signinoutController", ['$scope', '$rootScope', '$http', "$q", "$modal", "$state", "toast", "localStorageService", "authService", "usSpinnerService", signinoutController]);
 
-    function authController($scope, $rootScope, $http, $q, $modal, toast, $localStorageService, $authService, usSpinnerService) {
+    function signinoutController($scope, $rootScope, $http, $q, $modal, $state, toast, $localStorageService, $authService, usSpinnerService) {
         var vm = this;
 
         vm.cancel = cancel;
         vm.username = $localStorageService.get('recentUsername');
         vm.password = "";
+
         vm.isBusy = false;
 
         vm.signin = function () {
@@ -51,6 +52,11 @@
             vm.isBusy = false;
 
             $scope.$close(true);
+        };
+
+        vm.register = function () {
+            $scope.$close(false);
+            $state.go('register', {}, { reload: true });
         };
 
         function cancel() {

@@ -13,8 +13,9 @@
         // 3rd Party Modules
         'angularSpinner',
         'ajoslin.promise-tracker',
-         'LocalStorageModule',
-         'ui.router'
+        'LocalStorageModule',
+        'ui.router',
+        'ui.bootstrap.showErrors'
     ]);
 
     app.config(function () {
@@ -44,8 +45,27 @@
     });
 
     app.run(["$rootScope", "promiseTracker",  function ($rootScope, promiseTracker) {
-
         $rootScope.loadingTracker = promiseTracker({ activationDelay: 0, minDuration: 250 });
-    }]);
+    }]);    
+
+
+    app.directive('serverErrors', function () {
+        return {
+            restrict: "A",
+            require: "^?ngModel",
+            link: function (scope, elem, attr, ngModel) {
+
+                console.log(scope, elem, attr);
+
+                scope.$watch(function () { return scope.serverErrors.$invalid; }, function (newVal, oldVal) {
+                    if (newVal === true && !oldVal) {
+                        elem.toggleClass('has-error', true);
+                    }
+                });
+            }
+        }
+    });
+
+
 
 })();

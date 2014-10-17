@@ -1,7 +1,11 @@
+using System;
 using System.Linq;
 using System.Security.Claims;
+using HelloWorld.Identity;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using Nancy;
+using Nancy.ModelBinding;
 using Nancy.Security;
 using ClaimTypes = System.IdentityModel.Claims.ClaimTypes;
 
@@ -17,7 +21,22 @@ namespace HelloWorld.Controllers
 
             Get["/landing"] = _ => Response.AsRedirect("/");
             Get["/home"] = _ => Response.AsRedirect("/");
+            Get["/register"] = _ => Response.AsRedirect("/");
             Get["/"] = _ => View["index.html"];
+
+            Get["/SomeAuthenticatedApi"] = _ =>
+            {
+                this.RequiresMSOwinAuthentication();
+                this.RequiresSecurityClaims(claims => claims.Any(claim => claim.Type == ClaimTypes.Email));
+
+                var principal = Context.GetMSOwinUser();
+
+                // http://dhickey.ie/post/2014/01/04/Introducing-NancyMSOwinSecurity.aspx
+                // [Jan14] "Note: This package doesn't replace nor integrate with the exisiting nancy authentication and authorization infrasctructure (IUserIdentity). We're currently considering the best way to proceed on this."
+                var u = Context.CurrentUser;
+
+                return HttpStatusCode.OK;
+            };
 
             Post["Authorize"] = _ =>
             {
@@ -35,19 +54,37 @@ namespace HelloWorld.Controllers
                 return HttpStatusCode.OK;
             };
 
-            Get["/SomeAuthenticatedApi"] = _ =>
+            Post["api/account/Register"] = _ =>
             {
-                this.RequiresMSOwinAuthentication();
-                this.RequiresSecurityClaims(claims => claims.Any(claim => claim.Type == ClaimTypes.Email));
+                var userModel = this.Bind<UserRegistrationModel>();
 
-                var principal = Context.GetMSOwinUser();
+                var result = _userManager.Create(
+                    new ApplicationUser {UserName = userModel.Username, Email = userModel.Email},
+                    userModel.Password
+                    );
 
-                // http://dhickey.ie/post/2014/01/04/Introducing-NancyMSOwinSecurity.aspx
-                // [Jan14] "Note: This package doesn't replace nor integrate with the exisiting nancy authentication and authorization infrasctructure (IUserIdentity). We're currently considering the best way to proceed on this."
-                var u = Context.CurrentUser;
-
-                return HttpStatusCode.OK;
+                if (result.Succeeded)
+                {
+                    return HttpStatusCode.OK;
+                }
+                else
+                {
+                    return Response.AsJson(new { Errors = result.Errors.Select(x => new JsonFriendlyError(x)) }, HttpStatusCode.NotAcceptable);
+                }
             };
+        }
+
+        class JsonFriendlyError
+        {
+            public string Key { get; private set; }
+            public string Error { get; private set; }
+
+            public JsonFriendlyError(string originalErrorDescription)
+            {
+                var segments = originalErrorDescription.Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
+                Key = segments[0];
+                Error = segments[1];
+            }
         }
     }
 }

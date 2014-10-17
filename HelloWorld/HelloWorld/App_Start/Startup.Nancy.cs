@@ -1,6 +1,6 @@
 ﻿using System;
 using Autofac;
-using HelloWorld.Models;
+using HelloWorld.Identity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;

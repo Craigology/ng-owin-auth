@@ -172,13 +172,15 @@
     <Content Include="app\common.js" />
     <Content Include="app\config.route.js" />
     <Content Include="app\config.http.js" />
+    <Content Include="app\views\register\registerController.js" />
     <Content Include="app\dialogs\signout.html" />
     <Content Include="app\dialogs\signin.html" />
-    <Content Include="app\dialogs\authController.js" />
+    <Content Include="app\dialogs\signinoutController.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\shell.js" />
     <Content Include="app\views\landing\partial-landing.html" />
     <Content Include="app\views\home\partial-home.html" />
+    <Content Include="app\views\register\partial-register.html" />
     <Content Include="content\bootstrap-social.css" />
     <Content Include="content\bootstrap\bootstrap-theme.css" />
     <Content Include="content\bootstrap\bootstrap-theme.min.css" />
@@ -266,6 +268,7 @@
     <Content Include="scripts\jquery-2.1.1.min.js" />
     <Content Include="scripts\promise-tracker-http-interceptor.js" />
     <Content Include="scripts\promise-tracker.js" />
+    <Content Include="scripts\showErrors.js" />
     <Content Include="scripts\spin.js" />
     <Content Include="scripts\spin.min.js" />
     <Content Include="scripts\toastr.js" />
@@ -277,18 +280,23 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="Identity\ApplicationPasswordValidator.cs" />
+    <Compile Include="Identity\ApplicationUserManager.cs" />
+    <Compile Include="Identity\ApplicationUserValidator.cs" />
+    <Compile Include="Identity\EmailService.cs" />
+    <Compile Include="Identity\ApplicationSignInManager.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\Startup.Nancy.cs" />
     <Compile Include="Controllers\AccountNancyModule.cs" />
+    <Compile Include="Identity\SmsService.cs" />
     <Compile Include="Migrations\201409201417366_IdentityInitial.cs" />
     <Compile Include="Migrations\201409201417366_IdentityInitial.Designer.cs">
       <DependentUpon>201409201417366_IdentityInitial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Identity\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\IssAuthorizationServerProvider.cs" />
+    <Compile Include="Identity\AuthorizationServerProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -312,6 +320,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Domain\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201409201417366_IdentityInitial.resx">

@@ -5,9 +5,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 
-namespace HelloWorld.Providers
+namespace HelloWorld.Identity
 {
-    public class IssAuthorizationServerProvider : OAuthAuthorizationServerProvider
+    public class AuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
