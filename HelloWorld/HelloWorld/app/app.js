@@ -15,7 +15,8 @@
         'ajoslin.promise-tracker',
         'LocalStorageModule',
         'ui.router',
-        'ui.bootstrap.showErrors'
+        'ui.bootstrap.showErrors',
+        'angular-ladda'
     ]);
 
     app.config(function () {

@@ -46,15 +46,12 @@
                 <a href="#">Forgot Password?</a>
             </div>
         </div>
-        <div class="row" style="margin-top:10px;">
-            <div class="col-xs-4 pull-left">
+        <div class="row" style="padding:20px;">
+            <div class="pull-left">
                 <button type="button" class="btn btn-primary" ng-click="vm.register()">Register</button>
             </div>
-            <div class="col-xs-4 pull-right">
-                <a type="submit" class="btn btn-success" ng-disabled="isBusy" ng-click="vm.signin()" style="vertical-align: middle; ">
-                    <i us-spinner="{lines:8, length:6, width:2, radius:3, corners:1, color: '#ffffff', speed:1.3, trail:38, hwaccel:true, className: 'btn-spinner'}" spinner-key="spinner-local-submit-button" style="float: left; text-align: left; width: 30px"></i>
-                    <span>Sign In</span>
-                </a>
+            <div class="pull-right">
+                <button type="submit" class="btn btn-success ladda-button" ladda="vm.isBusy" ng-disabled="vm.isBusy" ng-click="vm.signin()" data-style="expand-left">Sign In</button>
                 <button type="button" class="btn btn-warning" ng-disabled="isBusy" ng-click="vm.cancel()">Cancel</button>
             </div>
         </div>

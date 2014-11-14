@@ -69,6 +69,7 @@
                 tokenProviderInterceptorFactory.responseError = function(rejection) {
                     if (rejection.status === 401) {
                         $injector.get('$state').go('signIn');
+                    } else if (rejection.status === 406) {
                     } else {
                         $injector.get('toast').error(rejection.statusText);
                     }

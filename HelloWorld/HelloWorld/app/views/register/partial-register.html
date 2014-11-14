@@ -1,7 +1,8 @@
-﻿<link href="../../content/bootstrap/bootstrap.min.css" rel="stylesheet" />
+﻿<!--<link href="../../content/bootstrap/bootstrap.min.css" rel="stylesheet" />-->
 <link href="../../content/fonts/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" />
 <link href="../../content/bootstrap-social.css" rel="stylesheet" />
-<script src="https://code.angularjs.org/1.2.24/angular-animate.js"></script>
+<!--<script src="scripts/ladda.min.js"></script>
+<script src="scripts/angular-ladda.min.js"></script>-->
 <form novalidate id="registerForm" name="registerForm" ng-controller="registerController as vm" role="form">
     <div class="container">
         <h3>Register</h3>
@@ -11,26 +12,17 @@
                     <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                     <input type="text" class="form-control" id="username" name="username" placeholder="name" ng-model="vm.registration.username" server-errors ng-model-options="{ allowInvalid: true }" ng-required autofocus>
                 </div>
-                <div ng-show="registerForm.username.$invalid" ng-repeat="error in registerForm.username.$error.serverMessages">
-                    <p class="help-block"><i class="fa fa-exclamation-circle"></i>&nbsp;{{ error }}</p>
-                </div>
             </div>
             <div class="form-group" style="margin-top:10px;">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
                     <input type="text" class="form-control" id="email" name="email" placeholder="email address" ng-model="vm.registration.email" server-errors ng-model-options="{ allowInvalid: true }" ng-required>
                 </div>
-                <div ng-show="registerForm.email.$invalid" ng-repeat="error in registerForm.email.$error.serverMessages">
-                    <p class="help-block"><i class="fa fa-exclamation-circle"></i>&nbsp;{{ error }}</p>
-                </div>
             </div>
             <div class="form-group" style="margin-top:10px;">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
                     <input type="password" class="form-control" id="password" name="password" placeholder="password" server-errors ng-model="vm.registration.password" ng-model-options="{ allowInvalid: true }" ng-required>
-                </div>
-                <div ng-show="registerForm.password.$invalid" ng-repeat="error in registerForm.password.$error.serverMessages">
-                    <p class="help-block"><i class="fa fa-exclamation-circle"></i>&nbsp;{{ error }}</p>
                 </div>
             </div>
             <div class="form-group" style="margin-top:10px;" >
@@ -39,14 +31,20 @@
                     <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="confirm password" ng-model="vm.registration.password_confirm">
                 </div>
             </div>
+            <div class="row pull-right">
+                <button class="btn btn-success ladda-button" ladda="isBusy" ng-click="vm.register()" data-style="expand-left">Register</button>
+                <button class="btn btn-warning" ng-disabled="vm.isBusy" ng-click="vm.cancel()">Cancel</button>
+            </div>
         </div>
-        <div class="row" style="margin-top:10px;">
-            <div class="col-xs-6 col-md-4 pull-right">
-                <a type="submit" class="btn btn-success" ng-disabled="isBusy" ng-click="vm.register()" style="vertical-align: middle; ">
-                    <i us-spinner="{lines:8, length:6, width:2, radius:3, corners:1, color: '#ffffff', speed:1.3, trail:38, hwaccel:true, className: 'btn-spinner'}" spinner-key="spinner-local-submit-button" style="float: left; text-align: left; width: 30px"></i>
-                    <span>Register</span>
-                </a>
-                <button type="button" class="btn btn-warning" ng-disabled="isBusy" ng-click="vm.cancel()">Cancel</button>
+        <div class="has-error">
+            <div ng-show="registerForm.username.$invalid" ng-repeat="error in registerForm.username.$error.serverMessages">
+                <p class="help-block"><i class="fa fa-exclamation-circle"></i>&nbsp;{{ error }}</p>
+            </div>
+            <div ng-show="registerForm.email.$invalid" ng-repeat="error in registerForm.email.$error.serverMessages">
+                <p class="help-block"><i class="fa fa-exclamation-circle"></i>&nbsp;{{ error }}</p>
+            </div>
+            <div ng-show="registerForm.password.$invalid" ng-repeat="error in registerForm.password.$error.serverMessages">
+                <p class="help-block"><i class="fa fa-exclamation-circle"></i>&nbsp;{{ error }}</p>
             </div>
         </div>
     </div> 

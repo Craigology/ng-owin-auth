@@ -14,7 +14,7 @@
             password_confirm: ""
         };
 
-        vm.isBusy = false;
+        $scope.isBusy = false;
 
         $scope.previousErrors = [];
 
@@ -23,7 +23,7 @@
             //$scope.$broadcast('show-errors-check-validity');
             $scope.registerForm.$setPristine();
 
-            vm.isBusy = true;
+            $scope.isBusy = true;
 
             usSpinnerService.spin('spinner-local-submit-button');
 
@@ -41,7 +41,7 @@
                 .then(function(response) {
 
                 }, function (result) {
-                    toast.error('Failed to register, reason: ' + result);
+                    //toast.error('Failed to register, reason: ' + result);
 
                     angular.forEach(result.data.errors, function (value, key) {
 
@@ -63,7 +63,7 @@
 
                 }).finally(function () {
                     usSpinnerService.stop('spinner-local-submit-button');
-                    vm.isBusy = false;
+                    $scope.isBusy = false;
                 });
         };
 
