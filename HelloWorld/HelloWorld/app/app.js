@@ -25,22 +25,22 @@
     }]);    
 
 
-    app.directive('serverErrors', function () {
+    app.directive('monitorValidity', function () {
         return {
             restrict: "A",
             require: "^?ngModel",
             link: function (scope, elem, attr, ngModel) {
 
-                console.log(scope, elem, attr);
-
-                scope.$watch(function () { return ngModel.$invalid; }, function (newVal, oldVal) {
-                    if (newVal === true && !oldVal) {
+                var toggleHasError = function (newVal, oldVal) {
+                    if (newVal === true) {
                         elem.parent().parent().toggleClass('has-error', true);
                     }
-                    else if (newVal === false && oldVal) {
+                    else if (newVal === false) {
                         elem.parent().parent().toggleClass('has-error', false);
                     }
-                });
+                };
+
+                scope.$watch(function () { return ngModel.$invalid; }, toggleHasError);
             }
         }
     });

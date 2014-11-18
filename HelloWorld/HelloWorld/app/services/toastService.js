@@ -7,6 +7,7 @@
 
         var _currentMessage;
         var _currentTitle;
+        var _currentToastCount = 0;
 
         var toastrOptionsForErrors = {
             "closeButton": true,
@@ -27,8 +28,11 @@
             "onShown": function () {
             },
             "onHidden": function () {
-                _currentMessage = undefined;
-                _currentTitle = undefined;
+                _currentToastCount--;
+                if (_currentToastCount == 0) {
+                    _currentMessage = undefined;
+                    _currentTitle = undefined;
+                }
             }
         };
 
@@ -55,12 +59,14 @@
             }
             _currentMessage = message;
             _currentTitle = title;
+            _currentToastCount++;
             toastr.error(message, title, toastrOptionsForErrors);
         };
 
         var _clear = function () {
             _currentMessage = undefined;
             _currentTitle = undefined;
+            _currentToastCount = 0;
             toastr.clear();
         };
 
