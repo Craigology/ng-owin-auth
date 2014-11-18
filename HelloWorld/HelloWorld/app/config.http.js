@@ -71,7 +71,7 @@
                         $injector.get('$state').go('signIn');
                     } else if (rejection.status === 406) {
                     } else {
-                        $injector.get('toast').error(rejection.statusText);
+                        $injector.get('toastService').error(rejection.statusText);
                     }
                     return $q.reject(rejection);
                 };

@@ -8,6 +8,7 @@ using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
 using ClaimTypes = System.IdentityModel.Claims.ClaimTypes;
+using System.Collections.Generic;
 
 namespace HelloWorld.Controllers
 {
@@ -69,7 +70,7 @@ namespace HelloWorld.Controllers
                 }
                 else
                 {
-                    return Response.AsJson(new { Errors = result.Errors.Select(x => new JsonFriendlyError(x)) }, HttpStatusCode.NotAcceptable);
+                    return Response.AsJson(new { Errors = JsonFriendlyError.Build(result.Errors) }, HttpStatusCode.NotAcceptable);
                 }
             };
         }
@@ -79,11 +80,23 @@ namespace HelloWorld.Controllers
             public string Key { get; private set; }
             public string Error { get; private set; }
 
-            public JsonFriendlyError(string originalErrorDescription)
+            public static JsonFriendlyError[] Build(IEnumerable<string> errors)
             {
-                var segments = originalErrorDescription.Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
-                Key = segments[0];
-                Error = segments[1];
+                return errors
+                    .Select(e =>
+                    {
+                        var segments = e.Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
+                        return new { Key = segments[0], Error = segments[1] };
+                    })
+                    .GroupBy(anon => anon.Key)
+                    .Select(group => new JsonFriendlyError(group.Key, string.Join("\\n", group.Select(anon => anon.Error))))
+                    .ToArray();
+            }
+
+            public JsonFriendlyError(string key, string error)
+            {
+                Key = key;
+                Error = error;
             }
         }
     }

@@ -1,9 +1,9 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('app').controller("registerController", ['$scope', '$rootScope', '$http', "$q", "$modal", "toast", "localStorageService", "authService", "usSpinnerService", registerController]);
+    angular.module('app').controller("registerController", ['$scope', '$rootScope', '$http', "$q", "$modal", 'toastService', "localStorageService", "authService", "usSpinnerService", registerController]);
 
-    function registerController($scope, $rootScope, $http, $q, $modal, toast, $localStorageService, $authService, usSpinnerService) {
+    function registerController($scope, $rootScope, $http, $q, $modal, toastService, $localStorageService, $authService, usSpinnerService) {
 
         var vm = this;        
 
@@ -18,50 +18,45 @@
 
         $scope.previousErrors = [];
 
+        vm.showErrors = function (model) {
+            if (model.$invalid && model.$error.$serverErrors) {
+                toastService.error(model.$error.$serverErrors, model.$name);
+            }
+        };
+
         vm.register = function () {
 
+            for (var i in $scope.registerForm) {
+                
+                var input = $scope.registerForm[i];
+                if (input) {
+                    if (input.$invalid) {
+                        input.$setValidity('serverErrors', true);
+                        input.$invalid = false;
+                    }
+                }
+            }
             $scope.registerForm.$setPristine();
-            for(var i in $scope.registerForm){ 
-                var input = $scope.registerForm[i]; 
-                input.$dirty = false;
-                input.$invalid = false;
-                input.$error.serverMessages = [];
-            };
 
             vm.isBusy = true;
-
-            //angular.forEach($scope.previousErrors, function(value, key) {
-            //    var elem = $scope.registerForm[value];
-            //    elem.$invalid = false;
-            //    elem.$setValidity('x', true);
-            //    elem.$error.serverMessages.length = 0;
-            //});
-            //$scope.previousErrors.length = 0;
-
+        
             $authService
                 .register(vm.registration)
                 .then(function(response) {
 
                 }, function (result) {
-                    //toast.error('Failed to register, reason: ' + result);
-
-                    //angular.forEach(result.data.errors, function (value, key) {
-
-                    //    var elem = $scope.registerForm[value.key];
-                    //    elem.$invalid = false;
-                    //    elem.$setValidity('x', true);
-                    //    elem.$error.serverMessages = [];
-                    //});
 
                     angular.forEach(result.data.errors, function (value, key) {
 
                         var elem = $scope.registerForm[value.key];
-                        elem.$error.serverMessages.push(value.error);
+                        elem.$setValidity('serverErrors', false);
 
-                        //$scope.previousErrors.push(value.key);
+                        var errorWithDecodedNewLines = value.error.replace(/\\n/g, '<br/>');
+                        elem.$error.$serverErrors = errorWithDecodedNewLines;
+                        elem.$invalid = true;
+
+                        toastService.error(errorWithDecodedNewLines, value.key);
                     });
-
-                    //$scope.$broadcast('show-errors-check-validity');
 
                 }).finally(function () {
                     vm.isBusy = false;

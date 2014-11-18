@@ -4,12 +4,12 @@
     angular.module('app').factory('authService', [
         '$http', '$q', 'localStorageService', '$rootScope', function($http, $q, localStorageService, $rootScope) {
 
-            var authServiceFactory = {};
+        var authServiceFactory = {};
             
-            var _authentication = {
-                isAuth: false,
-                userName: ""
-            };
+        var _authentication = {
+            isAuth: false,
+            userName: ""
+        };
 
         var _register = function (registration) {
 

@@ -1,9 +1,9 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('app').controller("shell", ['$scope', '$rootScope', '$http', "$q", "$log", "$modal", "$state", "toast", "authService", "$urlRouter", "$location", shell]);
+    angular.module('app').controller("shell", ['$scope', '$rootScope', '$http', "$q", "$log", "$modal", "$state", "toastService", "authService", "$urlRouter", "$location", shell]);
 
-    function shell($scope, $rootScope, $http, $q, $log, $modal, $state, toast, $authService, $urlRouter, $location) {
+    function shell($scope, $rootScope, $http, $q, $log, $modal, $state, toastServicetoast, $authService, $urlRouter, $location) {
         var vm = this;
 
         vm.signin = signin;
@@ -21,7 +21,7 @@
             $rootScope.isLoggedIn = true;
             vm.isLoggedIn = true;
             vm.username = username;
-            toast.success(username + ' logged in.');
+            toastService.success(username + ' logged in.');
 
             $state.go('home', {}, { reload: true });
         });

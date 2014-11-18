@@ -27,3 +27,4 @@
 /// <reference path="angular-resource.min.js" />
 /// <reference path="angular-route.min.js" />
 /// <reference path="toastr.min.js" />
+/// <reference path="../app/services/toastservice.js" />

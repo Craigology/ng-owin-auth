@@ -1,9 +1,9 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('app').controller("signinoutController", ['$scope', '$rootScope', '$http', "$q", "$modal", "$state", "toast", "localStorageService", "authService", "usSpinnerService", signinoutController]);
+    angular.module('app').controller("signinoutController", ['$scope', '$rootScope', '$http', "$q", "$modal", "$state", "toastService", "localStorageService", "authService", "usSpinnerService", signinoutController]);
 
-    function signinoutController($scope, $rootScope, $http, $q, $modal, $state, toast, $localStorageService, $authService, usSpinnerService) {
+    function signinoutController($scope, $rootScope, $http, $q, $modal, $state, toastService, $localStorageService, $authService, usSpinnerService) {
         var vm = this;
 
         vm.cancel = cancel;
@@ -29,7 +29,7 @@
                     $scope.$close(true);
 
                 }, function (error) {
-                    toast.error('Failed to login, reason: ' + error);
+                    toastService.error('Failed to login, reason: ' + error);
                 }).finally(function () {
                     usSpinnerService.stop('spinner-local-submit-button');
                     vm.isBusy = false;
