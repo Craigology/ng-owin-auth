@@ -5,9 +5,14 @@
 
     app.factory('toastService', ['$rootScope', function ($rootScope) {
 
-        var _currentMessage;
-        var _currentTitle;
-        var _currentToastCount = 0;
+        var activeToasts = {};
+
+        var _onShown = function ($toastElement, options) {
+        };
+
+        var _onHidden = function ($toastElement) {
+            delete activeToasts[$toastElement];
+        };
 
         var toastrOptionsForErrors = {
             "closeButton": true,
@@ -23,51 +28,40 @@
             "hideEasing": "linear",
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut",
-            "preventDuplicates": false,
-            "newestOnTop" : false,
-            "onShown": function () {
+            "preventDuplicates" : {
+                "skipDuplicateMessage" : true,
+                "removeMessageWithSameTitle" : true
             },
-            "onHidden": function () {
-                _currentToastCount--;
-                if (_currentToastCount == 0) {
-                    _currentMessage = undefined;
-                    _currentTitle = undefined;
-                }
-            }
+            "newestOnTop" : false,
+            "onShown" : _onShown,
+            "onHidden": _onHidden
         };
 
         var toastServiceFactory = {};
 
         var _success = function (message, title) {
-            if (message == _currentMessage) {
-                return;
-            }
-            if (title == _currentTitle) {
-                _clear();
-            }
-            _currentMessage = message;
-            _currentTitle = title;
             toastr.success(message, "Success");
         };
 
-        var _error = function (message, title) {
-            if (message == _currentMessage) {
-                return;
+        var _error = function (message, title, tag) {
+            var toast = toastr.error(message, title, toastrOptionsForErrors);
+            if (toast !== undefined && tag !== undefined) {
+                activeToasts[toast] = tag;
             }
-            if (title == _currentTitle) {
-                _clear();
-            }
-            _currentMessage = message;
-            _currentTitle = title;
-            _currentToastCount++;
-            toastr.error(message, title, toastrOptionsForErrors);
         };
 
-        var _clear = function () {
-            _currentMessage = undefined;
-            _currentTitle = undefined;
-            _currentToastCount = 0;
-            toastr.clear();
+        var _clear = function (tag) {
+            if (tag !== undefined) {
+                for (var activeToast in activeToasts) {
+                    if (activeToasts[activeToast] == tag) {
+                        $(activeToast).remove();
+                    }
+                }
+            }
+            else {
+                activeToasts.length = 0;
+                toastr.clear();
+            }
         };
 
         toastServiceFactory.success = _success;

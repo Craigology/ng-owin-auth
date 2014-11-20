@@ -32,11 +32,9 @@
                 options: {},
                 subscribe: subscribe,
                 success: success,
-                version: '2.1.0',
+                version: '2.1.1',
                 warning: warning
             };
-
-            var previousToast;
 
             return toastr;
 
@@ -181,7 +179,10 @@
                     target: 'body',
                     closeHtml: '<button>&times;</button>',
                     newestOnTop: true,
-                    preventDuplicates: false,
+                    preventDuplicates : {
+                        skipDuplicateMessage : false,
+                        removeMessageWithSameTitle : false
+                    },
                     progressBar: false
                 };
             }
@@ -195,14 +196,6 @@
                 var options = getOptions(),
                     iconClass = map.iconClass || options.iconClass;
 
-                if (options.preventDuplicates) {
-                    if (map.message === previousToast) {
-                        return;
-                    } else {
-                        previousToast = map.message;
-                    }
-                }
-
                 if (typeof (map.optionsOverride) !== 'undefined') {
                     options = $.extend(options, map.optionsOverride);
                     iconClass = map.optionsOverride.iconClass || iconClass;
@@ -211,6 +204,7 @@
                 toastId++;
 
                 $container = getContainer(options, true);
+
                 var intervalId = null,
                     $toastElement = $('<div/>'),
                     $titleElement = $('<div/>'),
@@ -244,6 +238,25 @@
                     $toastElement.append($messageElement);
                 }
 
+                if (options.preventDuplicates.skipDuplicateMessage) {
+                    var activeToasts = $container.children();
+                    for (var i = activeToasts.length - 1; i >= 0; i--) {
+                        var activeToastMesssage = $(activeToasts[i]).children('.' + options.messageClass);
+                        if (activeToastMesssage.text() === $messageElement.text()) {
+                            return;
+                        }
+                    }
+                }
+                if (options.preventDuplicates.removeMessageWithSameTitle) {
+                    for (var i = activeToasts.length - 1; i >= 0; i--) {
+                        var $activeToast = $(activeToasts[i]);
+                        var activeToastTitle = $activeToast.children('.' + options.titleClass);
+                        if (activeToastTitle.text() === $titleElement.text()) {
+                            $activeToast.remove();
+                        }
+                    }
+                }
+
                 if (options.closeButton) {
                     $closeElement.addClass('toast-close-button').attr('role', 'button');
                     $toastElement.prepend($closeElement);
@@ -261,7 +274,7 @@
                     $container.append($toastElement);
                 }
                 $toastElement[options.showMethod](
-                    {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
+                    { duration: options.showDuration, easing: options.showEasing, complete: function () { options.onShown($toastElement, options); } }
                 );
 
                 if (options.timeOut > 0) {
@@ -315,7 +328,7 @@
                         complete: function () {
                             removeToast($toastElement);
                             if (options.onHidden && response.state !== 'hidden') {
-                                options.onHidden();
+                                options.onHidden($toastElement);
                             }
                             response.state = 'hidden';
                             response.endTime = new Date();
@@ -355,6 +368,7 @@
                 if ($toastElement.is(':visible')) {
                     return;
                 }
+
                 $toastElement.remove();
                 $toastElement = null;
                 if ($container.children().length === 0) {

@@ -294,7 +294,6 @@
     <Content Include="scripts\spin.min.js" />
     <None Include="scripts\_references.js" />
     <Content Include="scripts\toastr.js" />
-    <Content Include="scripts\toastr.min.js" />
     <Content Include="templates\busy.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

@@ -19,17 +19,16 @@
         vm.showErrors = function (model) {
             if (model.$invalid) {
                 if (model.$error.$serverErrors) {
-                    toastService.error(model.$error.$serverErrors, model.$name);
+                    toastService.error(model.$error.$serverErrors, model.$name, "server");
                 }
                 if (model.$error.required) {
-                    toastService.error(model.$name + ' is required.', model.$name);
+                    toastService.error(model.$name + ' is required.', model.$name, "local");
                 }
             }
         };
 
         vm.register = function () {
 
-            toastService.clear();
             var hasLocalErrors = false;
 
             for (var i in $scope.registerForm) {
@@ -49,7 +48,7 @@
 
                         // If any local validation errors then raise a toast for this input and set a market for below.
                         if (errors.length > 0) {
-                            toastService.error(errors.join("\n"), input.$name);
+                            toastService.error(errors.join("\n"), input.$name, "local");
                             hasLocalErrors = true;
                             continue;
                         }
@@ -65,6 +64,7 @@
                 return;
             }
 
+            toastService.clear("local");
             $scope.registerForm.$setPristine();
 
             vm.isBusy = true;
@@ -84,7 +84,7 @@
                         elem.$error.$serverErrors = errorWithDecodedNewLines;
                         elem.$invalid = true;
 
-                        toastService.error(errorWithDecodedNewLines, value.key);
+                        toastService.error(errorWithDecodedNewLines, value.key, "server");
                     });
 
                 }).finally(function () {
