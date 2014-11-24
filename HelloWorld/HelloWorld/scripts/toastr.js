@@ -32,7 +32,7 @@
                 options: {},
                 subscribe: subscribe,
                 success: success,
-                version: '2.1.1',
+                version: '2.1.2',
                 warning: warning
             };
 
@@ -274,7 +274,7 @@
                     $container.append($toastElement);
                 }
                 $toastElement[options.showMethod](
-                    { duration: options.showDuration, easing: options.showEasing, complete: function () { options.onShown($toastElement, options); } }
+                    {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
                 );
 
                 if (options.timeOut > 0) {
@@ -328,7 +328,7 @@
                         complete: function () {
                             removeToast($toastElement);
                             if (options.onHidden && response.state !== 'hidden') {
-                                options.onHidden($toastElement);
+                                options.onHidden();
                             }
                             response.state = 'hidden';
                             response.endTime = new Date();

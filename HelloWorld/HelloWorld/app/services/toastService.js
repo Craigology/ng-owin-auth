@@ -51,7 +51,7 @@
         };
 
         var _clear = function (tag) {
-            if (tag !== undefined) {
+            if (tag !== undefined && activeToasts.length > 0) {
                 for (var activeToast in activeToasts) {
                     if (activeToasts[activeToast] == tag) {
                         $(activeToast).remove();
