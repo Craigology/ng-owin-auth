@@ -31,6 +31,9 @@
 
             var hasLocalErrors = false;
 
+            $scope.registerForm.$setDirty();
+            $scope.registerForm.$setSubmitted();
+
             for (var i in $scope.registerForm) {
                 
                 var input = $scope.registerForm[i];
@@ -46,7 +49,7 @@
                             input.$setValidity('required', true);
                         }
 
-                        // If any local validation errors then raise a toast for this input and set a market for below.
+                        // If any local validation errors then raise a toast for this input and set a flag for below.
                         if (errors.length > 0) {
                             toastService.error(errors.join("\n"), input.$name, "local");
                             hasLocalErrors = true;
@@ -61,11 +64,11 @@
             }
 
             if (hasLocalErrors) {
+                toastService.clear("server");
                 return;
             }
 
             toastService.clear("local");
-            $scope.registerForm.$setPristine();
 
             vm.isBusy = true;
         

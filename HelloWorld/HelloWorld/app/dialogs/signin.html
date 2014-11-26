@@ -2,7 +2,7 @@
 <link href="../../content/fonts/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" />
 <link href="../../content/bootstrap-social.css" rel="stylesheet" />
 <script src="https://code.angularjs.org/1.2.24/angular-animate.js"></script>
-<form novalidate id="signinForm" name="form.signin" ng-submit="vm.signin()" role="form">
+<form novalidate id="signinForm" name="signinForm" ng-submit="vm.signin()" role="form">
     <div class="container-fluid">
         <h3>Register</h3>
         <div class="row" style="margin-top:10px;">
@@ -30,29 +30,28 @@
                 </div>
             </div>
         </div>
-        <div class="row text-center" style="margin:10px;">
-            <div class="col-xs-11">
-                <div class="input-group" style="margin-top:10px;">
-                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                    <input type="text" class="form-control" name="username" placeholder="email address" ng-model="vm.username">
-                </div>
-                <div class="input-group" style="margin-top:10px;">
-                    <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
-                    <input type="password" class="form-control" name="password" placeholder="password" ng-model="vm.password">
-                </div>
+        <div class="form-group" style="margin-top:10px;">
+            <div class="input-group" style="margin-top:10px;">
+                <span class="input-group-addon" ng-click="vm.showErrors(signinForm.username)"><i class="fa fa-user fa-fw"></i></span>
+                <input type="text" class="form-control" name="username" placeholder="username" monitor-validity ng-model="vm.username" required autofocus>
             </div>
-
-            <div class="col-xs-4 pull-right" style="margin-top:20px;">
-                <a href="#">Forgot Password?</a>
+        </div>
+        <div class="form-group" style="margin-top:10px;">
+            <div class="input-group" style="margin-top:10px;">
+                <span class="input-group-addon" ng-click="vm.showErrors(signinForm.password)"><i class="fa fa-lock fa-fw"></i></span>
+                <input type="password" class="form-control" name="password" placeholder="password" monitor-validity ng-model="vm.password" required>
             </div>
+        </div>
+        <div class="col-xs-4 pull-right" style="margin-top:20px;">
+            <a href="#">Forgot Password?</a>
         </div>
         <div class="row" style="padding:20px;">
             <div class="pull-left">
                 <button type="button" class="btn btn-primary" ng-click="vm.register()">Register</button>
             </div>
             <div class="pull-right">
-                <button type="submit" class="btn btn-success ladda-button" ladda="vm.isBusy" ng-disabled="vm.isBusy" ng-click="vm.signin()" data-style="expand-left">Sign In</button>
-                <button type="button" class="btn btn-warning" ng-disabled="isBusy" ng-click="vm.cancel()">Cancel</button>
+                <button type="submit" class="btn btn-success ladda-button" ladda="vm.isBusy" ng-click="vm.signin()" data-style="expand-left" ng-disabled="signinForm.$pristine || signinForm.$invalid">Sign In</button>
+                <button type="button" class="btn btn-warning" ng-disabled="vm.isBusy" ng-click="vm.cancel()">Cancel</button>
             </div>
         </div>
     </div>

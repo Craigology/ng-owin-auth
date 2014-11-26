@@ -12,7 +12,20 @@
 
         vm.isBusy = false;
 
+        vm.showErrors = function (model) {
+            if (model.$invalid) {
+                if (model.$error.required) {
+                    toastService.error(model.$name + ' is required.', model.$name, "local");
+                }
+            }
+        };
+
         vm.signin = function () {
+
+            if ($scope.signinForm.$invalid)
+                return;
+
+            toastService.clearAll();
 
             vm.isBusy = true;
 

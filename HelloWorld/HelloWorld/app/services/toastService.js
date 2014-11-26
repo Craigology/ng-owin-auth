@@ -75,9 +75,10 @@
 
         var _clear = function (tag) {
             if (tag !== undefined) {
-                for (var activeToast in window.$('.toast')) {
-                    var $activeToast = $(activeToast);
-                    if ($activeToast !== undefined && $activeToast.data('tag') == tag) {
+                var activeToasts = window.$('.toast');
+                for (var i = 0; i < activeToasts.length; i++) {
+                    var $activeToast = $(activeToasts[i]);
+                    if ($activeToast.data('tag') == tag) {
                         $activeToast.remove();
                     }
                 }

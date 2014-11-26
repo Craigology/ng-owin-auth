@@ -29,3 +29,4 @@
 /// <reference path="toastr.min.js" />
 /// <reference path="../app/services/toastservice.js" />
 /// <reference path="toastr.js" />
+/// <reference path="../app/directives/monitorvalidity.js" />
