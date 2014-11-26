@@ -17,18 +17,11 @@
 
             return $http.post('api/account/register', registration)
             .success(function (response) {
-                localStorageService.set('authorizationData',
-                { token: response.access_token, userName: signinData.userName });
 
-                _authentication.isAuth = true;
-                _authentication.userName = signinData.userName;
-                _broadcastSignIn();
-
+                _signin({ userName: registration.username, password: registration.password });
                 deferred.resolve(response);
-
-            }).error(function (err, status) {            
-                deferred.reject(err);
             });
+
         };
 
         var _signin = function(signinData) {
@@ -37,16 +30,18 @@
 
             var deferred = $q.defer();
 
-            $http.post('token', data, {
-                headers:
-                { 'Content-Type': 'application/x-www-form-urlencoded' }
+            $http.post('token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             }).success(function(response) {
 
-                localStorageService.set('authorizationData',
-                { token: response.access_token, userName: signinData.userName });
+                $rootScope.token = response;
+                $rootScope.isLoggedIn = true;
+                
+                localStorageService.set('recentUsername', response.userName);
+                localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName });
 
                 _authentication.isAuth = true;
                 _authentication.userName = signinData.userName;
+
                 _broadcastSignIn();
 
                 deferred.resolve(response);
@@ -60,6 +55,9 @@
         };
 
         var _signout = function() {
+
+            $rootScope.isLoggedIn = false;
+            $rootScope.token = null;
 
             localStorageService.remove('authorizationData');
 
@@ -78,11 +76,13 @@
             }
         };
 
-        var _broadcastSignIn = function() {
-                $rootScope.$broadcast('loggedIn', _authentication.userName);
+        var _broadcastSignIn = function () {
+            $rootScope.isLoggedIn = true;
+            $rootScope.$broadcast('loggedIn', _authentication.userName);
             };
 
-        var _broadcastSignOut = function() {
+        var _broadcastSignOut = function () {
+            $rootScope.isLoggedIn = false;
             $rootScope.$broadcast('loggedOut');
         };
 

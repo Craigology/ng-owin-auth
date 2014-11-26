@@ -66,12 +66,17 @@
                     return config;
                 };
 
-                tokenProviderInterceptorFactory.responseError = function(rejection) {
-                    if (rejection.status === 401) {
-                        $injector.get('$state').go('signIn');
+                tokenProviderInterceptorFactory.responseError = function (rejection) {
+                    if (rejection.status === 0) {
+                        $injector.get('toastService').error("There's a problem communicating with the server right now. Please try again in a few moments.", "Temporarily Unavailable", "http");
+                    } else if (rejection.status === 401) {
+                        $injector.get('$state').go('signin');
+                    } else if (rejection.status === 400) {
+                        // Don't announce here, let the promise error callback deal with it.
                     } else if (rejection.status === 406) {
+                        // Don't announce here, let the promise error callback deal with it.
                     } else {
-                        $injector.get('toastService').error(rejection.statusText);
+                        $injector.get('toastService').error(rejection.statusText, "That Seemed To Fail", "http");
                     }
                     return $q.reject(rejection);
                 };

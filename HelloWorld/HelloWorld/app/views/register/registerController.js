@@ -1,9 +1,9 @@
 ﻿(function() {
     'use strict';
 
-    angular.module('app').controller("registerController", ['$scope', '$rootScope', '$http', "$q", "$modal", 'toastService', "localStorageService", "authService", "usSpinnerService", registerController]);
+    angular.module('app').controller("registerController", ['$scope', '$rootScope', '$http', "$q", "$modal", "$state", 'toastService', "localStorageService", "authService", "usSpinnerService", registerController]);
 
-    function registerController($scope, $rootScope, $http, $q, $modal, toastService, $localStorageService, $authService, usSpinnerService) {
+    function registerController($scope, $rootScope, $http, $q, $modal, $state, toastService, $localStorageService, $authService, usSpinnerService) {        
 
         var vm = this;        
 
@@ -75,6 +75,9 @@
 
                 }, function (result) {
 
+                    if (result.data == undefined)
+                        return;
+
                     angular.forEach(result.data.errors, function (value, key) {
 
                         var elem = $scope.registerForm[value.key];
@@ -93,7 +96,8 @@
         };
 
         vm.cancel = function cancel() {
-            // redirect back to landing?
+            toastService.clearAll();
+            $state.go('landing', {}, { reload: true });
         };
     }
 })();

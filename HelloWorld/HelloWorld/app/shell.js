@@ -3,7 +3,7 @@
 
     angular.module('app').controller("shell", ['$scope', '$rootScope', '$http', "$q", "$log", "$modal", "$state", "toastService", "authService", "$urlRouter", "$location", shell]);
 
-    function shell($scope, $rootScope, $http, $q, $log, $modal, $state, toastServicetoast, $authService, $urlRouter, $location) {
+    function shell($scope, $rootScope, $http, $q, $log, $modal, $state, toastService, $authService, $urlRouter, $location) {
         var vm = this;
 
         vm.signin = signin;
@@ -21,7 +21,7 @@
             $rootScope.isLoggedIn = true;
             vm.isLoggedIn = true;
             vm.username = username;
-            toastService.success(username + ' logged in.');
+            toastService.success(username + ' logged in.', '', 'auth');
 
             $state.go('home', {}, { reload: true });
         });
@@ -47,6 +47,7 @@
         };
 
         $scope.$on('$viewContentLoading', function (event, viewConfig) {
+
             $authService.checkForExistingToken();
 
             if ($authService.authentication.isAuth == true) {
@@ -57,47 +58,48 @@
                     $state.go("home");
                 }
             }
-
-            if ($authService.authentication.isAuth == false) {
+            else if ($authService.authentication.isAuth == false) {
 
                 if ($location.$$url === "/home") {
                     // stop the change!
                     event.preventDefault();
-
                     $state.go("landing");
                 }
             }
         });
 
-        (function activate() {
+        function activate() {
+            };
 
+        function signin() {
+            toastService.clearAll();
+
+            $modal.open({
+                templateUrl: 'app/dialogs/signin.html',
+                controller: 'signinoutController as vm'
+            });
+        };
+
+        function signout() {
+            toastService.clearAll();
+
+            $modal.open({
+                templateUrl: 'app/dialogs/signout.html',
+                controller: 'signinoutController as vm'
+            });
+        };
+
+        function someAuthenticatedApi() {
+
+            var deferred = $q.defer();
+
+            $http.get('/someAuthenticatedApi').success(function(response) {
+                deferred.resolve(response);
+            }).error(function(err, status) {
+                deferred.reject(err);
             });
 
-            function signin() {
-                $modal.open({
-                    templateUrl: 'app/dialogs/signin.html',
-                    controller: 'signinoutController as vm'
-                });
-            }
-
-            function signout() {
-                $modal.open({
-                    templateUrl: 'app/dialogs/signout.html',
-                    controller: 'signinoutController as vm'
-                });
-            }
-
-            function someAuthenticatedApi() {
-
-                var deferred = $q.defer();
-
-                $http.get('/someAuthenticatedApi').success(function(response) {
-                    deferred.resolve(response);
-                }).error(function(err, status) {
-                    deferred.reject(err);
-                });
-
-                return deferred.promise;
-            };
-        }
+            return deferred.promise;
+        };
+    }
 })();
