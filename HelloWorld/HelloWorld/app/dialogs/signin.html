@@ -3,9 +3,9 @@
 <link href="../../content/bootstrap-social.css" rel="stylesheet" />
 <script src="https://code.angularjs.org/1.2.24/angular-animate.js"></script>
 <form novalidate id="signinForm" name="signinForm" ng-submit="vm.signin()" role="form">
-    <div class="container-fluid">
+    <div class="container-fluid" style="max-width:640px">
         <h3>Register</h3>
-        <div class="row" style="margin-top:10px;">
+        <div class="row" style="margin-top:10px">
             <div class="col-xs-4 col-sm-4">
                 <a href="#" class="btn btn-block btn-social btn-facebook">
                     <i class="fa fa-facebook"></i>
@@ -24,35 +24,48 @@
                     <span class="hidden-xs">Google+</span>
                 </a>
             </div>
-            <div>
-                <div style="height: 0.3px; background-color:gray; text-align: center;margin-top: 60px !important;margin-bottom: 15px !important;">
-                    <span style="background-color: white; position: relative; top: 0;bottom:20px;width: 3em;">or</span>
+        </div>
+        <div class="row row-centered">
+            <div style="height: 0.3px; background-color:gray; text-align: center;margin-top: 20px !important;margin-bottom: 15px !important;">
+                <span style="background-color: white; position: relative; top: 0;bottom:20px;width: 3em;">or</span>
+            </div>
+        </div>
+        <div class="row row-centered">
+            <div class="col-xs-8 col-centered">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon" ng-click="vm.showErrors(signinForm.username)"><i class="fa fa-user fa-fw"></i></span>
+                        <input type="text" class="form-control" name="username" placeholder="username" monitor-validity ng-model="vm.username" required autofocus>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group" style="margin-top:10px;">
-            <div class="input-group" style="margin-top:10px;">
-                <span class="input-group-addon" ng-click="vm.showErrors(signinForm.username)"><i class="fa fa-user fa-fw"></i></span>
-                <input type="text" class="form-control" name="username" placeholder="username" monitor-validity ng-model="vm.username" required autofocus>
+        <div class="row row-centered">
+            <div class="col-xs-8 col-centered">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon" ng-click="vm.showErrors(signinForm.password)"><i class="fa fa-lock fa-fw"></i></span>
+                        <input type="password" class="form-control" name="password" placeholder="password" monitor-validity ng-model="vm.password" required>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="form-group" style="margin-top:10px;">
-            <div class="input-group" style="margin-top:10px;">
-                <span class="input-group-addon" ng-click="vm.showErrors(signinForm.password)"><i class="fa fa-lock fa-fw"></i></span>
-                <input type="password" class="form-control" name="password" placeholder="password" monitor-validity ng-model="vm.password" required>
+        <div class="row row-centered" style="margin-top:5px;">
+            <div class="col-xs-12">
+                <a href="#">Forgot Password?</a>
             </div>
         </div>
-        <div class="col-xs-4 pull-right" style="margin-top:20px;">
-            <a href="#">Forgot Password?</a>
-        </div>
-        <div class="row" style="padding:20px;">
-            <div class="pull-left">
+        <div class="row" style="margin-top:20px;">
+            <div class="col-xs-4">
                 <button type="button" class="btn btn-primary" ng-click="vm.register()">Register</button>
             </div>
-            <div class="pull-right">
-                <button type="submit" class="btn btn-success ladda-button" ladda="vm.isBusy" ng-click="vm.signin()" data-style="expand-left" ng-disabled="signinForm.$pristine || vm.isBusy">Sign In</button>
-                <button type="button" class="btn btn-warning" ng-disabled="vm.isBusy" ng-click="vm.cancel()">Cancel</button>
+            <div class="col-xs-8">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-success ladda-button" ladda="vm.isBusy" ng-click="vm.signin()" data-style="expand-left" ng-disabled="signinForm.$pristine || vm.isBusy">Sign In</button>
+                    <button type="button" class="btn btn-warning" ng-disabled="vm.isBusy" ng-click="vm.cancel()" margin-left 10px;">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
 </form>
+

@@ -1,4 +1,26 @@
-﻿[ng-cloak].splash {
+﻿.input-group {
+    margin-top : 8px;
+    margin-bottom : 8px;
+}
+
+/* http://www.minimit.com/articles/solutions-tutorials/bootstrap-3-responsive-centered-columns */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none !important;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+
+button {
+    min-width: 120px;
+}
+
+[ng-cloak].splash {
     display: block !important;
     position: absolute;
     margin: auto;
