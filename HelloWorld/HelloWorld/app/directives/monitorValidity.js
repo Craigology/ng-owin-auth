@@ -12,11 +12,14 @@
         var directive = {
             link: link,
             restrict: 'A',
-            require: "^?ngModel"
+            require: ["^form", "^?ngModel"]
         };
         return directive;
 
-        function link(scope, element, attrs, ngModel) {
+        function link(scope, element, attrs, ctrls) {
+
+            var form = ctrls[0];
+            var ngModel = ctrls[1];
 
             var onPristineChanged = function (newVal, oldVal) {
                 checkIfHasError();
@@ -32,7 +35,7 @@
 
             var checkIfHasError = function () {
 
-                if (ngModel.$pristine)
+                if (form.$pristine === true || form.$submitted === false)
                     return;
 
                 if (ngModel.$invalid) {
@@ -43,9 +46,9 @@
                 }
             };
 
-            scope.$watch(function () { return ngModel.$pristine; }, onPristineChanged);
+            scope.$watch(function () { return form.$pristine; }, onPristineChanged);
+            scope.$watch(function () { return form.$submitted; }, onSubmittedChanged);
             scope.$watch(function () { return ngModel.$invalid; }, onInvalidChanged);
-            scope.$watch(function () { return ngModel.$submitted; }, onSubmittedChanged);
         }
     }
 })();

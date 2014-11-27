@@ -74,9 +74,13 @@
         function signin() {
             toastService.clearAll();
 
-            $modal.open({
+            var modal = $modal.open({
                 templateUrl: 'app/dialogs/signin.html',
                 controller: 'signinoutController as vm'
+            });
+
+            modal.result.finally(function() {
+                toastService.clear("local");
             });
         };
 

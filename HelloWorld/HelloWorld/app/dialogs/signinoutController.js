@@ -13,7 +13,7 @@
         vm.isBusy = false;
 
         vm.showErrors = function (model) {
-            if (model.$invalid) {
+            if (model.$invalid && $scope.signinForm.$dirty) {
                 if (model.$error.required) {
                     toastService.error(model.$name + ' is required.', model.$name, "local");
                 }
@@ -22,8 +22,14 @@
 
         vm.signin = function () {
 
-            if ($scope.signinForm.$invalid)
+            $scope.signinForm.$setDirty();
+            $scope.signinForm.$setSubmitted();
+
+            if ($scope.signinForm.$invalid) {
+                vm.showErrors($scope.signinForm.username);
+                vm.showErrors($scope.signinForm.password);
                 return;
+            }
 
             toastService.clearAll();
 
@@ -36,7 +42,7 @@
                     $scope.$close(true);
 
                 }, function (error) {
-                    toastService.error(error, "There's a problem signing in", "signin");
+                    toastService.error(error.error_description, "There's A Problem Signing You In", "server");
                 }).finally(function () {
                     vm.isBusy = false;
                 });
@@ -45,11 +51,9 @@
         vm.signout = function () {
 
             vm.isBusy = true;
-
             $authService.signout();
 
             vm.username = null;
-
             vm.isBusy = false;
 
             $scope.$close(true);

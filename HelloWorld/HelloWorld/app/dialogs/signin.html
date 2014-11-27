@@ -50,7 +50,7 @@
                 <button type="button" class="btn btn-primary" ng-click="vm.register()">Register</button>
             </div>
             <div class="pull-right">
-                <button type="submit" class="btn btn-success ladda-button" ladda="vm.isBusy" ng-click="vm.signin()" data-style="expand-left" ng-disabled="signinForm.$pristine || signinForm.$invalid">Sign In</button>
+                <button type="submit" class="btn btn-success ladda-button" ladda="vm.isBusy" ng-click="vm.signin()" data-style="expand-left" ng-disabled="signinForm.$pristine || vm.isBusy">Sign In</button>
                 <button type="button" class="btn btn-warning" ng-disabled="vm.isBusy" ng-click="vm.cancel()">Cancel</button>
             </div>
         </div>
