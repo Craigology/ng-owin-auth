@@ -1,7 +1,8 @@
 ng-owin-auth
 ============
 
-An experimentation project to explore and learn with the following stack:
+An exploratory project using the stack below, specifically illustrating deep integration of Asp.Net Identity and a login/registration workflow in an AngularJS/Bootstrap front-end.
+
 
 ## Back End
 * Owin/Helios (no System.Web)
