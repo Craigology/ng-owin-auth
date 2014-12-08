@@ -177,6 +177,7 @@
     <Content Include="app\config.http.js" />
     <Content Include="app\directives\monitorValidity.js" />
     <Content Include="app\services\toastService.js" />
+    <Content Include="app\directives\appVersion.js" />
     <Content Include="app\views\register\registerController.js" />
     <Content Include="app\dialogs\signout.html" />
     <Content Include="app\dialogs\signin.html" />

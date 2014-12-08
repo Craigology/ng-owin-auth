@@ -30,3 +30,4 @@
 /// <reference path="../app/services/toastservice.js" />
 /// <reference path="toastr.js" />
 /// <reference path="../app/directives/monitorvalidity.js" />
+/// <reference path="../app/directives/appversion.js" />
