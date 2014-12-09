@@ -34,3 +34,5 @@ An exploratory project using the stack below, specifically illustrating deep int
 * Ladda
 
 
+## Misc
+* AngularJS directive containing version number transformed by TeamCity before Octopus packaging.
