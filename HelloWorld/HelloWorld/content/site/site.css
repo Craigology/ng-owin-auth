@@ -24,13 +24,26 @@ button {
     display: block !important;
     position: absolute;
     margin: auto;
+    margin-top: 0 !important;
     width: 100%;
     height: 30px;
-    align-content: center;
 }
+.splash > .progress-bar {
+    margin-top: -20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    float: none;
+    width: 100%;
+    height: auto;
+}
+
+.progress-bar span {
+    font-size: 16px;
+    text-align: center;    
+}
+
 .splash {
     display: none;
-    text-align: center;
 }
 
 /* 
@@ -68,4 +81,9 @@ button {
 /* opacity=0 when adding "active" class */
 .tab-animation > .tab-content > .tab-pane.active-add {
     opacity: 0;
+}
+
+/* position bottom toast container above the navbar */
+div.container > #toast-container.toast-bottom-full-width {
+    bottom: 52px !important;
 }
